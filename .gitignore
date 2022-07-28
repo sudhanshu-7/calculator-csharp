@@ -1,1 +1,7 @@
-.vs
+.vs/
+/practice/Calculator/Calculator/bin/Debug
+/practice/Exercise/Exercise/obj/Debug
+/practice/Exercise/Exercise/bin/Debug
+/practice/Features/Features/obj/Debug
+/practice/ClassDiagram/ClassDiagram/obj/Debug
+/practice/Calculator/Calculator/obj/Debug
