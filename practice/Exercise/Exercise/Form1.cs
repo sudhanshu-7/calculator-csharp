@@ -139,6 +139,11 @@ namespace Exercise
             handleEvaluate();
         }
 
+        private void button14_Click(object sender, EventArgs e)
+        {
+            shiftAndAdd(0);
+        }
+
         private void button10_Click(object sender, EventArgs e)
         {
             handleOperands(Operands.Add);
