@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ClassDiag2
+namespace Calculator
 {
     public interface IOperation
     {
+        int OperandCount{get;set;}
         Boolean ValidityCheck(double[] operands);
         double Evaluate(double[] operands);
-        int OperandCount { get; set; }
     }
 }

@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Calculator.BinaryOperation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAIAAgAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>BinaryOperation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Calculator.UnaryOperation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAIAAgAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>UnaryOperation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Calculator.AddOperation" Collapsed="true" HideInheritanceLine="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AddOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Calculator.SubtractOperation" Collapsed="true" HideInheritanceLine="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SubtractOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Calculator.MultiplyOperation" Collapsed="true" HideInheritanceLine="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MultiplyOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Calculator.DivideOperation" Collapsed="true" HideInheritanceLine="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DivideOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Calculator.ReciprocalOperation" Collapsed="true" HideInheritanceLine="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReciprocalOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Calculator.SquareRootOperation" Collapsed="true" HideInheritanceLine="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SquareRootOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Calculator.ExponentiationOperation" Collapsed="true" HideInheritanceLine="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ExponentiationOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Calculator.ExpressionEvaluator" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAAAAAAAAAAAAAAAAAgAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ExpressionEvaluator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Calculator.ExpressionConverter" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAIAAAAAAAAAAQAAAQAIAAAAAAAAAAAAAAAAgAAAAEE=</HashCode>
+      <FileName>ExpressionConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Calculator.IOperation" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>IOperation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ClassDiag2
 {
-    public class ReciprocalOperantion : UnaryOperation
+    public class ReciprocalOperation : UnaryOperation
     {
         public override double Evaluate(double[] operands)
         {
