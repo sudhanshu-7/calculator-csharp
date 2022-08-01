@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Calculator
 {
-    
+
     public class ExpressionConverter
     {
         private HashSet<string> _operatorList;
@@ -15,6 +15,10 @@ namespace Calculator
         public void AddOperator(string operatorItem)
         {
             _operatorList.Add(operatorItem);
+        }
+        public void AddOperator(List <String> operatorList)
+        {
+            _operatorList = new HashSet<string> (operatorList);
         }
         public Boolean CheckForOperator(string operatorItem)
         {
@@ -41,11 +45,11 @@ namespace Calculator
 
             return true;
         }
-        public List<Object> ToPostfix(List<Object> tokens)
+        public List<String> ToPostfix(List<String> tokens)
         {
             Stack<String> operatorStack = new Stack<String>();
-            List<Object> postFixExpression = new List<Object>();
-            foreach (Object token in tokens)
+            List<String> postFixExpression = new List<String>();
+            foreach (String token in tokens)
             {
                 if (token.ToString() == "(")
                 {
@@ -63,14 +67,14 @@ namespace Calculator
                         throw new Exception(ResourceExceptions.InvalidArgumentError);
                     }
                 }
-                else if (CheckForOperator(token.ToString()))
+                else if (CheckForOperator(token))
                 {
                     if (operatorStack.Count == 0)
                     {
-                        operatorStack.Push(token.ToString());
+                        operatorStack.Push(token);
                         continue;
                     }
-                    string tokenString = token.ToString();
+                    string tokenString = token;
                     while (operatorStack.Count > 0 && !PrecedenceCheck(tokenString, operatorStack.Peek()))
                     {
                         postFixExpression.Add(operatorStack.Pop());
@@ -84,7 +88,7 @@ namespace Calculator
             }
             while (operatorStack.Count > 0)
             {
-                if(operatorStack.Peek() == "(")
+                if (operatorStack.Peek() == "(")
                 {
                     throw new Exception(ResourceExceptions.InvalidArgumentError);
                 }
@@ -92,64 +96,42 @@ namespace Calculator
             }
             return postFixExpression;
         }
-        private string CleanExpressionString(string expressionString)
+        public List<String> Tokenizer(string expression)
         {
-            if (expressionString == null || expressionString.Length == 0) return expressionString;
-            string cleanedString = "";
-            //Checking for Multiple Operators
-            for (int i = 1; i < expressionString.Length; i++)
+            List<String> expressionsArray = new List<String>(expression.Split(' '));
+            List<String> tokens = new List<String>();
+            HashSet<String> unaryOperatorsSymbols = new HashSet<string>() { "sqrt", "log", "recip" };
+            for (int index = 0; index < expressionsArray.Count; index++)
             {
-                if (CheckForOperator(expressionString[i].ToString()) && CheckForOperator(expressionString[i - 1].ToString()))
+                String token = expressionsArray[index];
+                if (unaryOperatorsSymbols.Contains(token))
                 {
-                    throw new Exception(ResourceExceptions.InvalidStringError);
-                }
-            }
-            //Removing WhiteSpaces
-            for (int i = 0; i < expressionString.Length; i++)
-            {
-                if (expressionString[i] == ' ') continue;
-                cleanedString += expressionString[i];
-            }
-            if (cleanedString.Length > 0 && (CheckForOperator(cleanedString[0].ToString()) || CheckForOperator(cleanedString[cleanedString.Length - 1].ToString())))
-            {
-                throw new Exception(ResourceExceptions.InvalidStringError);
-            }
-            return cleanedString;
-        }
-        public List<Object> Tokenizer(string expression)
-        {
-            if (expression.Length == 0) throw new ArgumentException(ResourceExceptions.EmptyStringError);
-            expression = CleanExpressionString(expression);
-            List<Object> result = new List<Object>();
-            int stringPointer = 0, sizeOfExpression = expression.Length;
-
-            while (stringPointer < sizeOfExpression)
-            {
-                //Console.WriteLine(stringPointer);
-                if (CheckForOperator(expression[stringPointer].ToString()))
-                {
-                    result.Add(expression[stringPointer]);
-                    stringPointer++;
-                }
-                else if (CheckForParanthesis(expression[stringPointer].ToString()))
-                {
-                    result.Add(expression[stringPointer]);
-                    stringPointer++;
-                }
-                else
-                {
-                    string NumberToken = "";
-                    int numberPointer = stringPointer;
-                    while (numberPointer < sizeOfExpression && !CheckForOperator(expression[numberPointer].ToString()) && !CheckForParanthesis(expression[numberPointer].ToString()))
+                    tokens.Add("(");
+                    int count = 0;
+                    int closingIndex = index + 1;
+                    do
                     {
-                        NumberToken += expression[numberPointer];
-                        numberPointer++;
+                        if (CheckForParanthesis(expressionsArray[closingIndex]))
+                        {
+                            count += (expressionsArray[closingIndex] == "(" ? 1 : -1);
+                        }
+                        closingIndex++;
+
+                    } while (closingIndex < expressionsArray.Count && count != 0);
+
+                    if (closingIndex == expressionsArray.Count)
+                    {
+                        expressionsArray.Add(")");
                     }
-                    result.Add(Double.Parse(NumberToken));
-                    stringPointer = numberPointer;
+                    else
+                    {
+                        expressionsArray.Insert(closingIndex, ")");
+                    }
+
                 }
+                tokens.Add(token);
             }
-            return result;
+            return tokens;
         }
 
     }

@@ -1,17 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Calculator
 {
-    public class ExponentiationOperation : BinaryOperation
+    public class LogarithmicOperation : UnaryOperation
     {
-        public ExponentiationOperation() : base()
+        public LogarithmicOperation() : base()
         {
 
         }
         public override double Evaluate(double[] operands)
         {
             if (ValidityCheck(operands) == false) throw new ArgumentException(ResourceExceptions.InvalidArgumentError);
-            return Math.Pow(operands[0], operands[1]);
+            return Math.Log(operands[0]);
         }
     }
 }

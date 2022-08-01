@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C45C3FD7-3E55-4923-BA74-E9CEC300374E}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Calculator</RootNamespace>
-    <AssemblyName>Calculator</AssemblyName>
+    <ProjectGuid>{CD5DD15A-A820-43FA-B9DC-9205EFAE8B9F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Beta_One</RootNamespace>
+    <AssemblyName>Beta_One</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Calculator">
+      <HintPath>..\..\..\assignment\Calculator\Calculator\bin\Debug\Calculator.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,35 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddOperation.cs" />
-    <Compile Include="BinaryOperation.cs" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="DivideOperation.cs" />
-    <Compile Include="ExponentiationOperation.cs" />
-    <Compile Include="ExpressionConverter.cs" />
-    <Compile Include="ExpressionEvaluator.cs" />
-    <Compile Include="IOperation.cs" />
-    <Compile Include="LogarithmicOperation.cs" />
-    <Compile Include="MultiplyOperation.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReciprocalOperation.cs" />
-    <Compile Include="ResourceExceptions.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ResourceExceptions.resx</DependentUpon>
-    </Compile>
-    <Compile Include="SquareRootOperation.cs" />
-    <Compile Include="SubtractOperation.cs" />
-    <Compile Include="UnaryOperation.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ResourceExceptions.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ResourceExceptions.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
