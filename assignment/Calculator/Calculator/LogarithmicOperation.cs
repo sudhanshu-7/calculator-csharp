@@ -7,10 +7,6 @@ namespace Calculator
 {
     public class LogarithmicOperation : UnaryOperation
     {
-        public LogarithmicOperation() : base()
-        {
-
-        }
         public override double Evaluate(double[] operands)
         {
             if (ValidityCheck(operands) == false) throw new ArgumentException(ResourceExceptions.InvalidArgumentError);

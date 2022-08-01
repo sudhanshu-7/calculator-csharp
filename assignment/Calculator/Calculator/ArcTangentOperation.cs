@@ -1,8 +1,7 @@
 ﻿using System;
-
 namespace Calculator
 {
-    public class MultiplyOperation : BinaryOperation
+    public class ArcTangentOperation : UnaryOperation
     {
         public override double Evaluate(double[] operands)
         {
@@ -10,8 +9,7 @@ namespace Calculator
             {
                 throw new ArgumentException(ResourceExceptions.InvalidArgumentError);
             }
-            return operands[0] * operands[1];
+            return Math.Atan(operands[0]);
         }
-
     }
 }

@@ -5,57 +5,41 @@ using System.Collections.Generic;
 namespace Calculator
 {
 
-    public class ExpressionConverter
+    public static class ExpressionConverter
     {
-        private HashSet<string> _operatorList;
-        public ExpressionConverter()
-        {
-            _operatorList = new HashSet<string>();
-        }
-        public void AddOperator(string operatorItem)
-        {
-            _operatorList.Add(operatorItem);
-        }
-        public void AddOperator(List <String> operatorList)
-        {
-            _operatorList = new HashSet<string> (operatorList);
-        }
-        public Boolean CheckForOperator(string operatorItem)
-        {
-            return _operatorList.Contains(operatorItem);
-        }
-        public Boolean CheckForParanthesis(string query)
+        public static bool CheckForParanthesis(string query)
         {
             return (query == "(" || query == ")");
         }
-        public Boolean PrecedenceCheck(string operatorA, string operatorB)
+        public static bool PrecedenceCheck(string operatorToBePlaced, string operatorOnStackTop)
         {
-            if (operatorB == "(") return true;
-            if (operatorA == "^")
+            if (operatorOnStackTop == "(") return true;
+            if (operatorToBePlaced == "^")
             {
-                if (operatorB == "^" || operatorB == "+" || operatorB == "-" || operatorB == "/" || operatorB == "*") return true;
+                if (operatorOnStackTop == "^" || operatorOnStackTop == "+" || operatorOnStackTop == "-" || operatorOnStackTop == "/" || operatorOnStackTop == "*") return true;
                 return false;
             }
-            if (operatorA == "*" || operatorA == "/")
+            if (operatorToBePlaced == "*" || operatorToBePlaced == "/")
             {
-                if (operatorB == "+" || operatorB == "-") return true;
+                if (operatorOnStackTop == "+" || operatorOnStackTop == "-") return true;
                 return false;
             }
-            if (operatorA == "+" || operatorA == "-") return false;
+            if (operatorToBePlaced == "+" || operatorToBePlaced == "-") return false;
 
             return true;
         }
-        public List<String> ToPostfix(List<String> tokens)
+        public static List<string> ToPostfix(ExpressionEvaluator expressionEvaluatorObject , string expressionString)
         {
-            Stack<String> operatorStack = new Stack<String>();
-            List<String> postFixExpression = new List<String>();
-            foreach (String token in tokens)
+            List<string> tokens = Tokenize(expressionEvaluatorObject , expressionString);
+            Stack<string> operatorStack = new Stack<string>();
+            List<string> postFixExpression = new List<string>();
+            foreach (string token in tokens)
             {
-                if (token.ToString() == "(")
+                if (token == "(")
                 {
                     operatorStack.Push("(");
                 }
-                else if (token.ToString() == ")")
+                else if (token == ")")
                 {
                     while (operatorStack.Count > 0 && operatorStack.Peek() != "(")
                     {
@@ -67,7 +51,7 @@ namespace Calculator
                         throw new Exception(ResourceExceptions.InvalidArgumentError);
                     }
                 }
-                else if (CheckForOperator(token))
+                else if (expressionEvaluatorObject.CheckForOperator(token))
                 {
                     if (operatorStack.Count == 0)
                     {
@@ -96,14 +80,14 @@ namespace Calculator
             }
             return postFixExpression;
         }
-        public List<String> Tokenizer(string expression)
+        public static List<string> Tokenize(ExpressionEvaluator expressionEvaluatorObject, string expression)
         {
-            List<String> expressionsArray = new List<String>(expression.Split(' '));
-            List<String> tokens = new List<String>();
-            HashSet<String> unaryOperatorsSymbols = new HashSet<string>() { "sqrt", "log", "recip" };
+            List<string> expressionsArray = new List<string>(expression.Split(' '));
+            List<string> tokens = new List<string>();
+            HashSet<string> unaryOperatorsSymbols = new HashSet<string>(expressionEvaluatorObject.GetUnaryOperators()) ;
             for (int index = 0; index < expressionsArray.Count; index++)
             {
-                String token = expressionsArray[index];
+                string token = expressionsArray[index];
                 if (unaryOperatorsSymbols.Contains(token))
                 {
                     tokens.Add("(");

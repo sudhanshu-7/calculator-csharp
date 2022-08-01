@@ -4,10 +4,6 @@ namespace Calculator
 {
     public class ExponentiationOperation : BinaryOperation
     {
-        public ExponentiationOperation() : base()
-        {
-
-        }
         public override double Evaluate(double[] operands)
         {
             if (ValidityCheck(operands) == false) throw new ArgumentException(ResourceExceptions.InvalidArgumentError);

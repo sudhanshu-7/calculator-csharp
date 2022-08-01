@@ -6,13 +6,30 @@ namespace Calculator
 {
     public class ExpressionEvaluator
     {
-        private Dictionary<string, IOperation> operatorMapping;
-        private ExpressionConverter converter;
+        private Dictionary<string, IOperation> _operatorMapping;
         public ExpressionEvaluator()
         {
-            converter = new ExpressionConverter();
-
-            operatorMapping = new Dictionary<string, IOperation>
+            _operatorMapping = GetBaseDictionary();
+        }
+        public bool CheckForOperator(string operatorSymbol)
+        {
+            return _operatorMapping.ContainsKey(operatorSymbol);
+        }
+        public List <string> GetUnaryOperators()
+        {
+            List <string> result = new List <string>();
+            foreach(string operatorSymbol in _operatorMapping.Keys)
+            {
+                if(_operatorMapping[operatorSymbol] is UnaryOperation)
+                {
+                    result.Add(operatorSymbol);
+                }
+            }
+            return result;
+        }
+        private Dictionary<string, IOperation> GetBaseDictionary()
+        {
+            return new Dictionary<string, IOperation>
             {
                 { "+", new AddOperation() },
                 { "-", new SubtractOperation() },
@@ -20,52 +37,46 @@ namespace Calculator
                 { "/", new DivideOperation() },
                 { "^", new ExponentiationOperation() },
                 { "sqrt", new SquareRootOperation() },
-                { "log", new LogarithmicOperation() },
-                { "recip", new ReciprocalOperation() }
+                { "ln", new LogarithmicOperation() },
+                { "log", new LogarithmicBase10Operation() },
+                { "log2", new LogarithmicBase2Operation() },
+                { "recip", new ReciprocalOperation() },
+                { "sin" , new SineOperation() },
+                { "cos" , new CosineOperation() },
+                { "tan" , new TangentOperation() },
+                { "cosec" , new CosecantOperation()},
+                { "sec" , new SecantOperation()},
+                { "cot" , new CotangentOperation()},
+                { "asin" , new ArcSineOperation()},
+                { "acos" , new ArcCosineOperation()},
+                { "atan" , new ArcTangentOperation()}
             };
-
-            Dictionary<String, IOperation>.KeyCollection operatorKeys = operatorMapping.Keys;
-            List<String> operatorKeysList = new List<String>();
-            foreach (String operatorKey in operatorKeys)
-            {
-                operatorKeysList.Add(operatorKey);
-            }
-            converter.AddOperator(operatorKeysList);
         }
         public void ClearCustomOperations()
         {
-            operatorMapping = new Dictionary<string, IOperation>
-            {
-                { "+", new AddOperation() },
-                { "-", new SubtractOperation() },
-                { "*", new MultiplyOperation() },
-                { "/", new DivideOperation() },
-                { "^", new ExponentiationOperation() },
-                { "sqrt", new SquareRootOperation() },
-                { "log", new LogarithmicOperation() },
-                { "recip", new ReciprocalOperation() }
-            };
-            converter = new ExpressionConverter();
+            _operatorMapping = GetBaseDictionary();
         }
 
         public double Evaluate(string expressionString)
         {
-            List<String> tokens = converter.ToPostfix(converter.Tokenizer(expressionString));
-            Stack <Double> tokenStack = new Stack<Double>();
-            foreach(String token in tokens)
+            List<string> tokens = ExpressionConverter.ToPostfix(this,expressionString);
+            
+            //Postfix Evaluation Logic
+            Stack <double> tokenStack = new Stack<double>();
+            foreach(string token in tokens)
             {
-                if(converter.CheckForOperator(token))
+                if(CheckForOperator(token))
                 {
-                    IOperation operationObject = operatorMapping[token];
+                    IOperation operationObject = _operatorMapping[token];
                     int operandCount = operationObject.OperandCount;
                     if(operandCount > tokenStack.Count)
                     {
                         throw new Exception(ResourceExceptions.InvalidArgumentError);
                     }
                     double[] operands = new double[operandCount];
-                    for (int i = operandCount - 1; i >= 0; i--)
+                    for (int operandIndex = operandCount - 1; operandIndex >= 0; operandIndex--)
                     {
-                        operands[i] = tokenStack.Pop();
+                        operands[operandIndex] = tokenStack.Pop();
                     }
                     tokenStack.Push(operationObject.Evaluate(operands));
                 }
@@ -80,14 +91,13 @@ namespace Calculator
             }
             return tokenStack.Pop();
         }
-        public void RegisterCustomOperations(string operationSymbol, IOperation customOperation)
+        public void RegisterCustomOperation(string operationSymbol, IOperation customOperation)
         {
-            if (operatorMapping.ContainsKey(operationSymbol))
+            if (CheckForOperator(operationSymbol))
             {
                 throw new InvalidOperationException(ResourceExceptions.InvalidOperatorError);
             }
-            operatorMapping.Add(operationSymbol, customOperation);
-            converter.AddOperator(operationSymbol);
+            _operatorMapping.Add(operationSymbol, customOperation);
         }
     }
 }

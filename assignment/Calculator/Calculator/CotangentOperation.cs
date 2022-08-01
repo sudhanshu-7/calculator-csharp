@@ -1,17 +1,15 @@
 ﻿using System;
-
 namespace Calculator
 {
-    public class MultiplyOperation : BinaryOperation
+    public class CotangentOperation : UnaryOperation
     {
         public override double Evaluate(double[] operands)
         {
-            if (ValidityCheck(operands) == false)
+            if (!ValidityCheck(operands))
             {
                 throw new ArgumentException(ResourceExceptions.InvalidArgumentError);
             }
-            return operands[0] * operands[1];
+            return 1.0d / Math.Tan(operands[0]);
         }
-
     }
 }

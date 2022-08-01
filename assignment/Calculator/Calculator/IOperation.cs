@@ -3,8 +3,8 @@ namespace Calculator
 {
     public interface IOperation
     {
-        int OperandCount{get;set;}
-        Boolean ValidityCheck(double[] operands);
+        int OperandCount{get;}
+        bool ValidityCheck(double[] operands);
         double Evaluate(double[] operands);
     }
 }

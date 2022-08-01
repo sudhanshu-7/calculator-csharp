@@ -42,13 +42,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddOperation.cs" />
+    <Compile Include="ArcCosineOperation.cs" />
+    <Compile Include="ArcSineOperation.cs" />
+    <Compile Include="ArcTangentOperation.cs" />
     <Compile Include="BinaryOperation.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="CosecantOperation.cs" />
+    <Compile Include="CosineOperation.cs" />
+    <Compile Include="CotangentOperation.cs" />
     <Compile Include="DivideOperation.cs" />
     <Compile Include="ExponentiationOperation.cs" />
     <Compile Include="ExpressionConverter.cs" />
     <Compile Include="ExpressionEvaluator.cs" />
     <Compile Include="IOperation.cs" />
+    <Compile Include="LogarithmicBase10Operation.cs" />
+    <Compile Include="LogarithmicBase2Operation.cs" />
     <Compile Include="LogarithmicOperation.cs" />
     <Compile Include="MultiplyOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,8 +66,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceExceptions.resx</DependentUpon>
     </Compile>
+    <Compile Include="ResourceOperatorList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceOperatorList.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SecantOperation.cs" />
+    <Compile Include="SineOperation.cs" />
     <Compile Include="SquareRootOperation.cs" />
     <Compile Include="SubtractOperation.cs" />
+    <Compile Include="TangentOperation.cs" />
     <Compile Include="UnaryOperation.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +85,10 @@
     <EmbeddedResource Include="ResourceExceptions.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourceExceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResourceOperatorList.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceOperatorList.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
