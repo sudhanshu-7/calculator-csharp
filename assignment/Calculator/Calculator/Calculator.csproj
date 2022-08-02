@@ -46,7 +46,7 @@
     <Compile Include="ArcSineOperation.cs" />
     <Compile Include="ArcTangentOperation.cs" />
     <Compile Include="BinaryOperation.cs" />
-    <Compile Include="Calculator.cs" />
+    <Compile Include="CustomCalculator.cs" />
     <Compile Include="CosecantOperation.cs" />
     <Compile Include="CosineOperation.cs" />
     <Compile Include="CotangentOperation.cs" />
@@ -81,7 +81,7 @@
     <Compile Include="UnaryOperation.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="CalculatorClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ResourceExceptions.resx">

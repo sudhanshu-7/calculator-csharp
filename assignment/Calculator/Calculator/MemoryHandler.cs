@@ -5,42 +5,14 @@ using System.Text;
 
 namespace Calculator
 {
-    public class MemoryHandler
+    public interface IMemoryHandler
     {
-        private readonly Stack<double> _memory;
+        void MemorySave(double value);
 
-        public double[] Memory { get => _memory.ToArray(); }
-        
-        public MemoryHandler()
-        {
-            _memory = new Stack<double>();
-        }
+        void MemoryClear();
 
-        public void MemorySave(double value)
-        {
-            _memory.Push(value);
-        }
-        
-        public void MemoryClear()
-        {
-            _memory.Clear();
-        }
-        
-        public double MemoryRecall()
-        {
-            return _memory.Peek();
-        }
-        
-        public void MemoryModification(double value)
-        {
-            if(_memory.Count == 0)
-            {
-                _memory.Push(value);
-            }
-            else
-            {
-                _memory.Push(_memory.Pop() + value);
-            }
-        }
+        double MemoryRecall();
+
+        void MemoryModification(double value);
     }
 }

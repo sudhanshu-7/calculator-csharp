@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,21 +39,36 @@ namespace BetaOne
     }
     internal class Program
     {
+        static void PrintMemory(CustomCalculator mem)
+        {
+            double[] items = mem.Memory;
+            foreach (double item in items)
+            {
+                Console.Write(item + " -> ");
+            }
+            Console.WriteLine(" X ");
+        }
         static void Main()
         {
             Object ans;
+            CustomCalculator calculator = new CustomCalculator();
             try{
-            ExpressionEvaluator ev = new ExpressionEvaluator();
-            ev.RegisterCustomOperation("$" , new DollarOperation());
-            ev.RegisterCustomOperation("#" , new CustomOperation());
+            calculator.RegisterCustomOperation("$" , new DollarOperation());
+            calculator.RegisterCustomOperation("#" , new CustomOperation());
             Console.WriteLine("Enter a Evaluation String: ");
             String s = Console.ReadLine();
-            ans = ev.Evaluate(s);
+            ans = calculator.Evaluate(s);
             }catch(Exception exception){
                 ans = ("Exception : " + exception.ToString());
             }
             Console.WriteLine();
             Console.WriteLine("Answer : " + ans);
+            calculator.MemoryModification(-5.64);
+            calculator.MemoryModification(6);
+            calculator.MemorySave(45);
+            calculator.MemorySave(56);
+            calculator.MemoryModification(-50);
+            PrintMemory(calculator);
             Console.ReadKey();
         }
     }

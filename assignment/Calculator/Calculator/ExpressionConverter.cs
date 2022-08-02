@@ -28,7 +28,7 @@ namespace Calculator
 
             return true;
         }
-        public static List<string> ToPostfix(ExpressionEvaluator expressionEvaluatorObject , string expressionString)
+        public static List<string> ToPostfix(IExpressionEvaluator expressionEvaluatorObject , string expressionString)
         {
             List<string> tokens = Tokenize(expressionEvaluatorObject , expressionString);
             Stack<string> operatorStack = new Stack<string>();
@@ -80,7 +80,7 @@ namespace Calculator
             }
             return postFixExpression;
         }
-        public static List<string> Tokenize(ExpressionEvaluator expressionEvaluatorObject, string expression)
+        public static List<string> Tokenize(IExpressionEvaluator expressionEvaluatorObject, string expression)
         {
             List<string> expressionsArray = new List<string>(expression.Split(' '));
             List<string> tokens = new List<string>();
