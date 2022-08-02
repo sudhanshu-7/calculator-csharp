@@ -5,15 +5,19 @@ namespace Calculator
 {
     public class CustomCalculator : IExpressionEvaluator , IMemoryHandler
     {
+        #region Private Fields
         private Dictionary<string, IOperation> _operatorMapping;
 
         private readonly Stack<double> _memory;
+        #endregion
 
         public CustomCalculator()
         {
             _operatorMapping = GetBaseDictionary();
             _memory = new Stack<double>();
         }
+
+        #region Memory Functions
         public double[] Memory { get => _memory.ToArray(); }
 
         public void MemorySave(double value)
@@ -41,6 +45,9 @@ namespace Calculator
                 _memory.Push(_memory.Pop() + value);
             }
         }
+        #endregion
+
+        #region Evaluate Functions
         public bool CheckForOperator(string operatorSymbol)
         {
             return _operatorMapping.ContainsKey(operatorSymbol);
@@ -132,5 +139,6 @@ namespace Calculator
             }
             _operatorMapping.Add(operationSymbol, customOperation);
         }
+        #endregion
     }
 }
