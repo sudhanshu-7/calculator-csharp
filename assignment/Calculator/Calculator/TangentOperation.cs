@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace Calculator
 {
     public class TangentOperation : UnaryOperation

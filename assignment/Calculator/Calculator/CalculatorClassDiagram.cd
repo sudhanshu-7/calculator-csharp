@@ -6,8 +6,8 @@
   <Comment CommentText="Arithmetic&#xD;&#xA;Binary Operations">
     <Position X="4.075" Y="22.664" Height="0.403" Width="1.283" />
   </Comment>
-  <Comment CommentText="Arithmetic Unary Operations">
-    <Position X="4.306" Y="19.083" Height="0.472" Width="1.283" />
+  <Comment CommentText="Arithmetic&#xD;&#xA;Unary Operations">
+    <Position X="4.181" Y="17.271" Height="0.472" Width="1.283" />
   </Comment>
   <Class Name="Calculator.UnaryOperation" BaseTypeListCollapsed="true">
     <Position X="5.25" Y="13.25" Width="3" />
@@ -167,11 +167,12 @@
       <FileName>ArcTangentOperation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Calculator.SquareRootOperation" HideInheritanceLine="true">
+  <Class Name="Calculator.SquareOperation" HideInheritanceLine="true">
     <Position X="6.5" Y="21" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>SquareRootOperation.cs</FileName>
+      <FileName>SquareOperation.cs</FileName>
+      <NewMemberFileName>SquareRootOperation.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Calculator.CustomCalculator">
@@ -181,6 +182,13 @@
       <FileName>CustomCalculator.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Calculator.SquareRootOperation" HideInheritanceLine="true">
+    <Position X="3.25" Y="18.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SquareRootOperation.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Interface Name="Calculator.IOperation">
     <Position X="3.25" Y="11" Width="2.75" />

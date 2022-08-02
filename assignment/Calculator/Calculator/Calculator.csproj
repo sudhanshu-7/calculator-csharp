@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="SecantOperation.cs" />
     <Compile Include="SineOperation.cs" />
+    <Compile Include="SquareOperation.cs" />
     <Compile Include="SquareRootOperation.cs" />
     <Compile Include="SubtractOperation.cs" />
     <Compile Include="TangentOperation.cs" />

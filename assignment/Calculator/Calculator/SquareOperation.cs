@@ -2,12 +2,12 @@
 
 namespace Calculator
 {
-    public class LogarithmicOperation : UnaryOperation
+    public class SquareOperation : UnaryOperation
     {
         public override double Evaluate(double[] operands)
         {
             if (ValidityCheck(operands) == false) throw new ArgumentException(ResourceExceptions.InvalidArgumentError);
-            return Math.Log(operands[0]);
+            return operands[0] * operands[0];
         }
     }
 }

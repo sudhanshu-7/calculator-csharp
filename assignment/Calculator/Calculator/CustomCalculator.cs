@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Calculator
 {
@@ -71,6 +69,7 @@ namespace Calculator
                 { "^", new ExponentiationOperation() },
                 { "%" , new PercentageOperation() },
                 { "sqrt", new SquareRootOperation() },
+                { "sqr" , new SquareOperation() },
                 { "ln", new LogarithmicOperation() },
                 { "log", new LogarithmicBase10Operation() },
                 { "log2", new LogarithmicBase2Operation() },
