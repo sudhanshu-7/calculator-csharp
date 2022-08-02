@@ -46,7 +46,6 @@
     <Compile Include="ArcSineOperation.cs" />
     <Compile Include="ArcTangentOperation.cs" />
     <Compile Include="BinaryOperation.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="CosecantOperation.cs" />
     <Compile Include="CosineOperation.cs" />
     <Compile Include="CotangentOperation.cs" />
@@ -59,6 +58,7 @@
     <Compile Include="LogarithmicBase2Operation.cs" />
     <Compile Include="LogarithmicOperation.cs" />
     <Compile Include="MultiplyOperation.cs" />
+    <Compile Include="PercentageOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReciprocalOperation.cs" />
     <Compile Include="ResourceExceptions.Designer.cs">

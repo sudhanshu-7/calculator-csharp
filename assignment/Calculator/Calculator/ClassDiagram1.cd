@@ -43,11 +43,12 @@
       <FileName>ReciprocalOperation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Calculator.SquareRootOperation" HideInheritanceLine="true">
-    <Position X="5.25" Y="8.25" Width="3" />
+  <Class Name="Calculator.PercentageOperation" HideInheritanceLine="true">
+    <Position X="8.25" Y="8.25" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>SquareRootOperation.cs</FileName>
+      <FileName>PercentageOperation.cs</FileName>
+      <NewMemberFileName>SquareRootOperation.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Calculator.ExponentiationOperation" HideInheritanceLine="true">
@@ -60,7 +61,7 @@
   <Class Name="Calculator.ExpressionEvaluator">
     <Position X="7.5" Y="0.5" Width="6" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAAAAAgAAAICAAAAAABAAAAAAAkA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAgAAAICQAAAAABAAAAAAAEA=</HashCode>
       <FileName>ExpressionEvaluator.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -162,6 +163,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ArcTangentOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Calculator.SquareRootOperation" HideInheritanceLine="true">
+    <Position X="5" Y="8.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SquareRootOperation.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Calculator.IOperation">

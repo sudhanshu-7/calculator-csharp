@@ -15,12 +15,12 @@ namespace Calculator
         {
             return _operatorMapping.ContainsKey(operatorSymbol);
         }
-        public List <string> GetUnaryOperators()
+        public List <string> GetNonArithmeticOperators()
         {
             List <string> result = new List <string>();
             foreach(string operatorSymbol in _operatorMapping.Keys)
             {
-                if(_operatorMapping[operatorSymbol] is UnaryOperation)
+                if(!(_operatorMapping[operatorSymbol] is BinaryOperation))
                 {
                     result.Add(operatorSymbol);
                 }
@@ -36,6 +36,7 @@ namespace Calculator
                 { "*", new MultiplyOperation() },
                 { "/", new DivideOperation() },
                 { "^", new ExponentiationOperation() },
+                { "%" , new PercentageOperation() },
                 { "sqrt", new SquareRootOperation() },
                 { "ln", new LogarithmicOperation() },
                 { "log", new LogarithmicBase10Operation() },

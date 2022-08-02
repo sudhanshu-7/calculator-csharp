@@ -84,7 +84,7 @@ namespace Calculator
         {
             List<string> expressionsArray = new List<string>(expression.Split(' '));
             List<string> tokens = new List<string>();
-            HashSet<string> unaryOperatorsSymbols = new HashSet<string>(expressionEvaluatorObject.GetUnaryOperators()) ;
+            HashSet<string> unaryOperatorsSymbols = new HashSet<string>(expressionEvaluatorObject.GetNonArithmeticOperators()) ;
             for (int index = 0; index < expressionsArray.Count; index++)
             {
                 string token = expressionsArray[index];
