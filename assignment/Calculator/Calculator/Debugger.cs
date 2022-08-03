@@ -6,9 +6,9 @@ namespace Calculator
 {
     internal static class Debugger
     {
-        public static void debug(List<string> array)
+        public static void Debug(List<string> array)
         {
-            foreach(string obj in array)
+            foreach (string obj in array)
             {
                 Console.Write(obj + " -> ");
             }

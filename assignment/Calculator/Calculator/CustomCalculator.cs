@@ -109,7 +109,7 @@ namespace Calculator
         public double Evaluate(string expressionString)
         {
             List<string> tokens = ExpressionConverter.ToPostfix(this, expressionString);
-            Debugger.debug(tokens);
+            //Debugger.Debug(tokens);
             //Postfix Evaluation Logic
             Stack<double> tokenStack = new Stack<double>();
             foreach (string token in tokens)

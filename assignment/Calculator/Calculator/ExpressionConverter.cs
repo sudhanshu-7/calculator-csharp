@@ -80,12 +80,34 @@ namespace Calculator
             }
             return postFixExpression;
         }
+        public static string HandleCustomOperations(string expression)
+        {
+            //Console.WriteLine("InsideHandleOperations! with : " + expression);
+            Regex regex = new Regex(@",[^,]*,|[(][^,]*,|,[^,]*[)]");
+            List<int[]> bracketIndex = new List<int[]>();
+            Match matchResult = regex.Match(expression);
+            while (matchResult.Success)
+            {
+                //Console.WriteLine("'{0}' found in the source code at position {1} with length {2}.", matchResult.Value, matchResult.Index, matchResult.Value.Length);
+                bracketIndex.Add(new int[] { matchResult.Index + 1, matchResult.Value.Length - 1 + matchResult.Index });
+                matchResult = regex.Match(expression, matchResult.Index + 1);
+            }
+            string finalString = expression;
+            int insertedElements = 0;
+            foreach (int[] indexes in bracketIndex)
+            {
+                finalString = finalString.Insert(indexes[0] + insertedElements++, "(");
+                finalString = finalString.Insert(indexes[1] + insertedElements++, ")");
+            }
+            return finalString;
+        }
         public static List <string> RegexTokenize(IExpressionEvaluator expressionEvaluatorObject, string expression)
         {
-            expression = Regex.Replace(expression, @"\s+", "");
-            expression = Regex.Replace(expression, @"(\(-)","(0-");
-            expression = Regex.Replace(expression, @"[,]", " ");
-            Console.WriteLine(expression);
+            expression = Regex.Replace(expression, @"\s+", ""); //Removing Spaces
+            expression = Regex.Replace(expression, @"(\(-)","(0-"); // For situations like (-6)
+            expression = HandleCustomOperations(expression);
+            expression = Regex.Replace(expression, @"[,]", " "); //Removing (Comma),
+            //Console.WriteLine(expression);
             string regexPattern = string.Format(@"{0}", ResourceOperatorList.RegexPattern);
             List <string> regexTokens = expressionEvaluatorObject.GetTokens();
             regexTokens.Sort((stringA, stringB) => stringB.Length - stringA.Length);
