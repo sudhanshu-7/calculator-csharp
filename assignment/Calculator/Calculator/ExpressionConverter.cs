@@ -83,36 +83,41 @@ namespace Calculator
         {
             List<string> expressionsArray = new List<string>(expression.Split(' '));
             List<string> tokens = new List<string>();
-            HashSet<string> unaryOperatorsSymbols = new HashSet<string>(expressionEvaluatorObject.GetNonArithmeticOperators()) ;
+            HashSet<string> nonArithmeticOperators = new HashSet<string>(expressionEvaluatorObject.GetNonArithmeticOperators()) ;
+            
             for (int index = 0; index < expressionsArray.Count; index++)
             {
-                string token = expressionsArray[index];
-                if (unaryOperatorsSymbols.Contains(token))
-                {
-                    tokens.Add("(");
-                    int count = 0;
-                    int closingIndex = index + 1;
-                    do
-                    {
-                        if (CheckForParanthesis(expressionsArray[closingIndex]))
-                        {
-                            count += (expressionsArray[closingIndex] == "(" ? 1 : -1);
-                        }
-                        closingIndex++;
+                //string token = expressionsArray[index];
+                //if(token == "-" && (tokens.Count == 0 || tokens[tokens.Count - 1] == "("))
+                //{
+                //    tokens.Add("0");
+                //} 
+                //if (nonArithmeticOperators.Contains(token))
+                //{
+                //    tokens.Add("(");
+                //    int count = 0;
+                //    int closingIndex = index + 1;
+                //    do
+                //    {
+                //        if (CheckForParanthesis(expressionsArray[closingIndex]))
+                //        {
+                //            count += (expressionsArray[closingIndex] == "(" ? 1 : -1);
+                //        }
+                //        closingIndex++;
 
-                    } while (closingIndex < expressionsArray.Count && count != 0);
+                //    } while (closingIndex < expressionsArray.Count && count != 0);
 
-                    if (closingIndex == expressionsArray.Count)
-                    {
-                        expressionsArray.Add(")");
-                    }
-                    else
-                    {
-                        expressionsArray.Insert(closingIndex, ")");
-                    }
+                //    if (closingIndex == expressionsArray.Count)
+                //    {
+                //        expressionsArray.Add(")");
+                //    }
+                //    else
+                //    {
+                //        expressionsArray.Insert(closingIndex, ")");
+                //    }
 
-                }
-                tokens.Add(token);
+                //}
+                //tokens.Add(token);
             }
             return tokens;
         }
