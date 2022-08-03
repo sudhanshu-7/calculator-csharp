@@ -64,6 +64,15 @@ namespace Calculator
             }
             return result;
         }
+        public List<string> GetTokens()
+        {
+            List<string> result = new List<string>();
+            foreach (string key in _operatorMapping.Keys)
+            {
+                result.Add(key);
+            }
+            return result;
+        }
 
         private Dictionary<string, IOperation> GetBaseDictionary()
         {
@@ -100,7 +109,7 @@ namespace Calculator
         public double Evaluate(string expressionString)
         {
             List<string> tokens = ExpressionConverter.ToPostfix(this, expressionString);
-
+            Debugger.debug(tokens);
             //Postfix Evaluation Logic
             Stack<double> tokenStack = new Stack<double>();
             foreach (string token in tokens)

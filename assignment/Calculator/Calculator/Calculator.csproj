@@ -46,6 +46,7 @@
     <Compile Include="ArcSineOperation.cs" />
     <Compile Include="ArcTangentOperation.cs" />
     <Compile Include="BinaryOperation.cs" />
+    <Compile Include="Debugger.cs" />
     <Compile Include="CustomCalculator.cs" />
     <Compile Include="CosecantOperation.cs" />
     <Compile Include="CosineOperation.cs" />

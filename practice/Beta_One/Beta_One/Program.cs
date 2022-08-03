@@ -52,13 +52,16 @@ namespace BetaOne
         {
             Object ans;
             CustomCalculator calculator = new CustomCalculator();
-            try{
-            calculator.RegisterCustomOperation("$" , new DollarOperation());
-            calculator.RegisterCustomOperation("#" , new CustomOperation());
-            Console.WriteLine("Enter a Evaluation String: ");
-            String s = Console.ReadLine();
-            ans = calculator.Evaluate(s);
-            }catch(Exception exception){
+            try
+            {
+                calculator.RegisterCustomOperation("$", new DollarOperation());
+                calculator.RegisterCustomOperation("#", new CustomOperation());
+                Console.WriteLine("Enter a Evaluation String: ");
+                String s = Console.ReadLine();
+                ans = calculator.Evaluate(s);
+            }
+            catch (Exception exception)
+            {
                 ans = ("Exception : " + exception.ToString());
             }
             Console.WriteLine();
@@ -68,8 +71,15 @@ namespace BetaOne
             calculator.MemorySave(45);
             calculator.MemorySave(56);
             calculator.MemoryModification(-50);
-            PrintMemory(calculator);
+            //PrintMemory(calculator);
             Console.ReadKey();
+            //string inputString  = Console.ReadLine();
+            //List <string> tokens = ExpressionConverter.RegexTokenize(new CustomCalculator(), inputString);
+            //foreach(string token in tokens)
+            //{
+            //    Console.WriteLine($"Token : {token} Length : {token.Length}");
+            //}
+            //Console.ReadKey();
         }
     }
 }

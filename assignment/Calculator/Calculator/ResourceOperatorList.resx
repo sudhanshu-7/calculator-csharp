@@ -117,26 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BasicOperators" xml:space="preserve">
-    <value>{ "+", new AddOperation() },
-                { "-", new SubtractOperation() },
-                { "*", new MultiplyOperation() },
-                { "/", new DivideOperation() },
-                { "^", new ExponentiationOperation() },
-                { "sqrt", new SquareRootOperation() },
-                { "ln", new LogarithmicOperation() },
-                { "log", new LogarithmicBase10Operation() },
-                { "log2", new LogarithmicBase2Operation() },
-                { "recip", new ReciprocalOperation() },
-                { "sin" , new SineOperation() },
-                { "cos" , new CosineOperation() },
-                { "tan" , new TangentOperation() },
-                { "cosec" , new CosecantOperation()},
-                { "sec" , new SecantOperation()},
-                { "cot" , new CotangentOperation()},
-                { "asin" , new ArcSineOperation()},
-                { "acos" , new ArcCosineOperation()},
-                { "atan" , new ArcTangentOperation()}</value>
-    <comment> Basic Operators</comment>
+  <data name="RegexPattern" xml:space="preserve">
+    <value>(\d)*[.](\d)*|(\d)+|[(]|[)]</value>
+    <comment>Regex Pattern for digits ( operands ).</comment>
   </data>
 </root>

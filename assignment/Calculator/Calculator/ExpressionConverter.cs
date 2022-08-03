@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Calculator
 {
@@ -79,9 +80,36 @@ namespace Calculator
             }
             return postFixExpression;
         }
+        public static List <string> RegexTokenize(IExpressionEvaluator expressionEvaluatorObject, string expression)
+        {
+            expression = Regex.Replace(expression, @"\s+", "");
+            expression = Regex.Replace(expression, @"(\(-)","(0-");
+            expression = Regex.Replace(expression, @"[,]", " ");
+            Console.WriteLine(expression);
+            string regexPattern = string.Format(@"{0}", ResourceOperatorList.RegexPattern);
+            List <string> regexTokens = expressionEvaluatorObject.GetTokens();
+            regexTokens.Sort((stringA, stringB) => stringB.Length - stringA.Length);
+            foreach(string token in regexTokens)
+            {
+                regexPattern += string.Format("|{1}{0}{2}", token, token.Length > 1 ? "(" : "[/", token.Length > 1 ? ")" : "]");
+                //regexPattern += ("|(" + (token=="^"? "/" : "") + token + ")");
+            }
+            //Console.WriteLine(regexPattern);
+            List <string> tokens = new List<string>();
+            Regex regexObject = new Regex(regexPattern);
+            Match matchObject = regexObject.Match(expression);
+            while(matchObject.Success){
+                //Console.WriteLine(matchObject.Value);
+                tokens.Add(matchObject.Value);
+                matchObject = matchObject.NextMatch();
+            }
+            return tokens;
+        }
         public static List<string> Tokenize(IExpressionEvaluator expressionEvaluatorObject, string expression)
         {
-            List<string> expressionsArray = new List<string>(expression.Split(' '));
+            //expression = RegexTokenize(expressionEvaluatorObject , expression);
+            //List<string> expressionsArray = new List<string>(expression.Split(' '));
+            List<string> expressionsArray = RegexTokenize(expressionEvaluatorObject, expression);
             List<string> tokens = new List<string>();
             HashSet<string> unaryOperatorsSymbols = new HashSet<string>(expressionEvaluatorObject.GetNonArithmeticOperators()) ;
             for (int index = 0; index < expressionsArray.Count; index++)
