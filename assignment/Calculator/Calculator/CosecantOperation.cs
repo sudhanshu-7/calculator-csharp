@@ -4,6 +4,10 @@ namespace Calculator
 {
     public class CosecantOperation : UnaryOperation
     {
+        public CosecantOperation() : base("cosec", OperatorAssociativity.LeftToRight, OperatorPrecedence.Unary)
+        {
+
+        }
         public override double Evaluate(double[] operands)
         {
             if (!ValidityCheck(operands))

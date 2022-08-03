@@ -4,6 +4,10 @@ namespace Calculator
 {
     public class TangentOperation : UnaryOperation
     {
+        public TangentOperation() : base("tan", OperatorAssociativity.LeftToRight, OperatorPrecedence.Unary)
+        {
+
+        }
         public override double Evaluate(double[] operands)
         {
             if (!ValidityCheck(operands))

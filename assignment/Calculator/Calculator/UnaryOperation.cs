@@ -2,20 +2,12 @@
 
 namespace Calculator
 {
-    public abstract class UnaryOperation : IOperation
+    public abstract class UnaryOperation : Operation
     {
-        public int OperandCount { get; }
-        public UnaryOperation()
+        public UnaryOperation(string symbol, OperatorAssociativity operatorAssociativity, OperatorPrecedence operatorPrecedence) : base(symbol, 1 ,  operatorAssociativity, operatorPrecedence)
         {
-            OperandCount = 1;
         }
-
-        public virtual bool ValidityCheck(double[] operands)
-        {
-            if (operands == null || operands.Length == 0) return false;
-            return true;
-        }
-        public abstract double Evaluate(double[] operands);
+        public override abstract double Evaluate(double[] operands);
 
     }
 }

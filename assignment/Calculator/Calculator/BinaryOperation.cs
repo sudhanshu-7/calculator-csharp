@@ -2,19 +2,12 @@
 
 namespace Calculator
 {
-    public abstract class BinaryOperation : IOperation
+    public abstract class BinaryOperation : Operation
     {
-        public int OperandCount { get; }
-        public BinaryOperation()
+        public BinaryOperation(string symbol, OperatorAssociativity operatorAssociativity, OperatorPrecedence operatorPrecedence) : base(symbol, 2, operatorAssociativity, operatorPrecedence)
         {
-            OperandCount = 2;
         }
-        public virtual bool ValidityCheck(double[] operands)
-        {
-            if (operands == null || operands.Length < 2) return false;
-            return true;
-        }
+        public override abstract double Evaluate(double[] operands);
 
-        public abstract double Evaluate(double[] operands);
     }
 }

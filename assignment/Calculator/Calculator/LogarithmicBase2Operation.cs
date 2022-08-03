@@ -4,6 +4,10 @@ namespace Calculator
 {
     public class LogarithmicBase2Operation : UnaryOperation
     {
+        public LogarithmicBase2Operation() : base("log2", OperatorAssociativity.LeftToRight, OperatorPrecedence.Unary)
+        {
+
+        }
         public override double Evaluate(double[] operands)
         {
             if(ValidityCheck(operands) == false)

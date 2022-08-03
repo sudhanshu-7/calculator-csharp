@@ -61,6 +61,8 @@
     <Compile Include="LogarithmicOperation.cs" />
     <Compile Include="MemoryHandler.cs" />
     <Compile Include="MultiplyOperation.cs" />
+    <Compile Include="Operand.cs" />
+    <Compile Include="Operation.cs" />
     <Compile Include="PercentageOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReciprocalOperation.cs" />
@@ -80,7 +82,9 @@
     <Compile Include="SquareRootOperation.cs" />
     <Compile Include="SubtractOperation.cs" />
     <Compile Include="TangentOperation.cs" />
+    <Compile Include="Token.cs" />
     <Compile Include="UnaryOperation.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CalculatorClassDiagram.cd" />

@@ -4,6 +4,10 @@ namespace Calculator
 {
     public class ArcSineOperation : UnaryOperation
     {
+        public ArcSineOperation() : base("asin", OperatorAssociativity.LeftToRight, OperatorPrecedence.Unary)
+        {
+        }
+
         public override bool ValidityCheck(double[] operands)
         {
             return base.ValidityCheck(operands) && Math.Abs(operands[0]) <= 1;

@@ -4,6 +4,10 @@ namespace Calculator
 {
     public class DivideOperation : BinaryOperation
     {
+        public DivideOperation() : base("/", OperatorAssociativity.LeftToRight, OperatorPrecedence.Higher)
+        {
+
+        }
         public override double Evaluate(double[] operands)
         {
             if (ValidityCheck(operands) == false) throw new ArgumentException(ResourceExceptions.InvalidArgumentError);
