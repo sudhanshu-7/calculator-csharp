@@ -46,7 +46,7 @@
       "Associativity": "LeftToRight"
     },
     "SquareRoot": {
-      "Symbol": "sqrt",
+      "Symbol": "sqt",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
