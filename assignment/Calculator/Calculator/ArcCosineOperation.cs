@@ -4,6 +4,10 @@ namespace Calculator
 {
     public class ArcCosineOperation : UnaryOperation
     {
+        public ArcCosineOperation() : base("acos", OperatorAssociativity.LeftToRight, OperatorPrecedence.Unary)
+        {
+        }
+
         public override bool ValidityCheck(double[] operands)
         {
             return base.ValidityCheck(operands) && Math.Abs(operands[0]) <= 1;

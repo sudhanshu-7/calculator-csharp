@@ -61,20 +61,11 @@ namespace Calculator {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to { &quot;+&quot;, new AddOperation() },
-        ///                { &quot;-&quot;, new SubtractOperation() },
-        ///                { &quot;*&quot;, new MultiplyOperation() },
-        ///                { &quot;/&quot;, new DivideOperation() },
-        ///                { &quot;^&quot;, new ExponentiationOperation() },
-        ///                { &quot;sqrt&quot;, new SquareRootOperation() },
-        ///                { &quot;ln&quot;, new LogarithmicOperation() },
-        ///                { &quot;log&quot;, new LogarithmicBase10Operation() },
-        ///                { &quot;log2&quot;, new LogarithmicBase2Operation() },
-        ///                { &quot;recip&quot;, new Reciproc [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to (\d)*[.](\d)*|(\d)+|[(]|[)].
         /// </summary>
-        internal static string BasicOperators {
+        internal static string RegexPattern {
             get {
-                return ResourceManager.GetString("BasicOperators", resourceCulture);
+                return ResourceManager.GetString("RegexPattern", resourceCulture);
             }
         }
     }

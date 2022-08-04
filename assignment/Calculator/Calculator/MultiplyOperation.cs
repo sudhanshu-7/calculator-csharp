@@ -4,6 +4,10 @@ namespace Calculator
 {
     public class MultiplyOperation : BinaryOperation
     {
+        public MultiplyOperation() : base("*", OperatorAssociativity.LeftToRight, OperatorPrecedence.Higher)
+        {
+
+        }
         public override double Evaluate(double[] operands)
         {
             if (ValidityCheck(operands) == false)

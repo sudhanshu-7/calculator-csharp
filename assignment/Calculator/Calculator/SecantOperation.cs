@@ -4,6 +4,10 @@ namespace Calculator
 {
     public class SecantOperation : UnaryOperation
     {
+        public SecantOperation() : base("sec", OperatorAssociativity.LeftToRight, OperatorPrecedence.Unary)
+        {
+
+        }
         public override double Evaluate(double[] operands)
         {
             if (!ValidityCheck(operands))

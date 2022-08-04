@@ -6,7 +6,7 @@ namespace Calculator
     public class CustomCalculator : IExpressionEvaluator , IMemoryHandler
     {
         #region Private Fields
-        private Dictionary<string, IOperation> _operatorMapping;
+        private Dictionary<string, Operation> _operatorMapping;
 
         private readonly Stack<double> _memory;
         #endregion
@@ -64,10 +64,19 @@ namespace Calculator
             }
             return result;
         }
-
-        private Dictionary<string, IOperation> GetBaseDictionary()
+        public List<string> GetTokens()
         {
-            return new Dictionary<string, IOperation>
+            List<string> result = new List<string>();
+            foreach (string key in _operatorMapping.Keys)
+            {
+                result.Add(key);
+            }
+            return result;
+        }
+
+        private Dictionary<string, Operation> GetBaseDictionary()
+        {
+            return new Dictionary<string, Operation>
             {
                 { "+", new AddOperation() },
                 { "-", new SubtractOperation() },
@@ -100,7 +109,7 @@ namespace Calculator
         public double Evaluate(string expressionString)
         {
             List<string> tokens = ExpressionConverter.ToPostfix(this, expressionString);
-
+            //Debugger.Debug(tokens);
             //Postfix Evaluation Logic
             Stack<double> tokenStack = new Stack<double>();
             foreach (string token in tokens)
@@ -131,7 +140,7 @@ namespace Calculator
             }
             return tokenStack.Pop();
         }
-        public void RegisterCustomOperation(string operationSymbol, IOperation customOperation)
+        public void RegisterCustomOperation(string operationSymbol, Operation customOperation)
         {
             if (CheckForOperator(operationSymbol))
             {

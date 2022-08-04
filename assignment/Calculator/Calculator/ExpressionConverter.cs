@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Calculator
 {
@@ -79,9 +80,58 @@ namespace Calculator
             }
             return postFixExpression;
         }
+        public static string HandleCustomOperations(string expression)
+        {
+            //Console.WriteLine("InsideHandleOperations! with : " + expression);
+            Regex regex = new Regex(@",[^,]*,|[(][^,]*,|,[^,]*[)]");
+            List<int[]> bracketIndex = new List<int[]>();
+            Match matchResult = regex.Match(expression);
+            while (matchResult.Success)
+            {
+                //Console.WriteLine("'{0}' found in the source code at position {1} with length {2}.", matchResult.Value, matchResult.Index, matchResult.Value.Length);
+                bracketIndex.Add(new int[] { matchResult.Index + 1, matchResult.Value.Length - 1 + matchResult.Index });
+                matchResult = regex.Match(expression, matchResult.Index + 1);
+            }
+            string finalString = expression;
+            int insertedElements = 0;
+            foreach (int[] indexes in bracketIndex)
+            {
+                finalString = finalString.Insert(indexes[0] + insertedElements++, "(");
+                finalString = finalString.Insert(indexes[1] + insertedElements++, ")");
+            }
+            return finalString;
+        }
+        public static List <string> RegexTokenize(IExpressionEvaluator expressionEvaluatorObject, string expression)
+        {
+            expression = Regex.Replace(expression, @"\s+", ""); //Removing Spaces
+            expression = Regex.Replace(expression, @"(\(-)","(0-"); // For situations like (-6)
+            expression = HandleCustomOperations(expression);
+            expression = Regex.Replace(expression, @"[,]", " "); //Removing (Comma),
+            //Console.WriteLine(expression);
+            string regexPattern = string.Format(@"{0}", ResourceOperatorList.RegexPattern);
+            List <string> regexTokens = expressionEvaluatorObject.GetTokens();
+            regexTokens.Sort((stringA, stringB) => stringB.Length - stringA.Length);
+            foreach(string token in regexTokens)
+            {
+                regexPattern += string.Format("|{1}{0}{2}", token, token.Length > 1 ? "(" : "[/", token.Length > 1 ? ")" : "]");
+                //regexPattern += ("|(" + (token=="^"? "/" : "") + token + ")");
+            }
+            //Console.WriteLine(regexPattern);
+            List <string> tokens = new List<string>();
+            Regex regexObject = new Regex(regexPattern);
+            Match matchObject = regexObject.Match(expression);
+            while(matchObject.Success){
+                //Console.WriteLine(matchObject.Value);
+                tokens.Add(matchObject.Value);
+                matchObject = matchObject.NextMatch();
+            }
+            return tokens;
+        }
         public static List<string> Tokenize(IExpressionEvaluator expressionEvaluatorObject, string expression)
         {
-            List<string> expressionsArray = new List<string>(expression.Split(' '));
+            //expression = RegexTokenize(expressionEvaluatorObject , expression);
+            //List<string> expressionsArray = new List<string>(expression.Split(' '));
+            List<string> expressionsArray = RegexTokenize(expressionEvaluatorObject, expression);
             List<string> tokens = new List<string>();
             HashSet<string> nonArithmeticOperators = new HashSet<string>(expressionEvaluatorObject.GetNonArithmeticOperators()) ;
             
