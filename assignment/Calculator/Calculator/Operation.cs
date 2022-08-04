@@ -12,7 +12,7 @@ namespace Calculator
         {
             OperationSymbol = symbol;
             OperandCount = operandCount;
-            OperatorAssociativity = OperatorAssociativity;
+            OperatorAssociativity = operatorAssociativity;
             OperatorPrecedence = operatorPrecedence;
         }
         public string OperationSymbol { get; }

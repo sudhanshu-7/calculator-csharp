@@ -63,6 +63,7 @@
     <Compile Include="MultiplyOperation.cs" />
     <Compile Include="Operand.cs" />
     <Compile Include="Operation.cs" />
+    <Compile Include="Paranthesis.cs" />
     <Compile Include="PercentageOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReciprocalOperation.cs" />

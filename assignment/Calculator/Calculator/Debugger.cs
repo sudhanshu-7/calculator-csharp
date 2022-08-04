@@ -6,11 +6,12 @@ namespace Calculator
 {
     internal static class Debugger
     {
-        public static void Debug(List<string> array)
+
+        public static void Debug<T>(List<T> array)
         {
-            foreach (string obj in array)
+            foreach (var obj in array)
             {
-                Console.Write(obj + " -> ");
+                Console.Write(obj.ToString() + " -> ");
             }
             Console.WriteLine(" X ");
         }

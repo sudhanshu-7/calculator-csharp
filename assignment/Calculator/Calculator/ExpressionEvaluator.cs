@@ -10,6 +10,6 @@ namespace Calculator
         List<string> GetTokens();
         void ClearCustomOperations();
         double Evaluate(string expressionString);
-        void RegisterCustomOperation(string operationSymbol, IOperation customOperation);
+        void RegisterCustomOperation(string operationSymbol, Operation customOperation);
     }
 }

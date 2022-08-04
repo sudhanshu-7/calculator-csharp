@@ -11,74 +11,152 @@ namespace Calculator
         {
             return (query == "(" || query == ")");
         }
-        public static bool PrecedenceCheck(string operatorToBePlaced, string operatorOnStackTop)
-        {
-            if (operatorOnStackTop == "(") return true;
-            if (operatorToBePlaced == "^")
-            {
-                if (operatorOnStackTop == "^" || operatorOnStackTop == "+" || operatorOnStackTop == "-" || operatorOnStackTop == "/" || operatorOnStackTop == "*") return true;
-                return false;
-            }
-            if (operatorToBePlaced == "*" || operatorToBePlaced == "/")
-            {
-                if (operatorOnStackTop == "+" || operatorOnStackTop == "-") return true;
-                return false;
-            }
-            if (operatorToBePlaced == "+" || operatorToBePlaced == "-") return false;
+        //public static bool PrecedenceCheck(string operatorToBePlaced, string operatorOnStackTop)
+        //{
+        //    if (operatorOnStackTop == "(") return true;
+        //    if (operatorToBePlaced == "^")
+        //    {
+        //        if (operatorOnStackTop == "^" || operatorOnStackTop == "+" || operatorOnStackTop == "-" || operatorOnStackTop == "/" || operatorOnStackTop == "*") return true;
+        //        return false;
+        //    }
+        //    if (operatorToBePlaced == "*" || operatorToBePlaced == "/")
+        //    {
+        //        if (operatorOnStackTop == "+" || operatorOnStackTop == "-") return true;
+        //        return false;
+        //    }
+        //    if (operatorToBePlaced == "+" || operatorToBePlaced == "-") return false;
 
+        //    return true;
+        //}
+        public static bool PrecedenceCheck(Token operatorToBePlaced, Token operatorOnStackTop)
+        {
+            if (operatorOnStackTop is Paranthesis)
+            {
+                return true;
+            }
+            Operation placingOperation = (Operation)operatorToBePlaced;
+            Operation stackTopOperation = (Operation)operatorOnStackTop;
+            
+            if(placingOperation.OperatorPrecedence > stackTopOperation.OperatorPrecedence)
+            {
+                return true;
+            }else if(placingOperation.OperatorPrecedence < stackTopOperation.OperatorPrecedence)
+            {
+                return false;
+            }else if(placingOperation.OperatorPrecedence == stackTopOperation.OperatorPrecedence)
+            {
+                //Console.WriteLine("Here for {1} ({3}) & {2} Returning {0}!",(placingOperation.OperatorAssociativity == OperatorAssociativity.RightToLeft),placingOperation.ToString(),stackTopOperation.ToString() , placingOperation.OperatorAssociativity);
+                return placingOperation.OperatorAssociativity == OperatorAssociativity.RightToLeft;
+            }
             return true;
         }
-        public static List<string> ToPostfix(IExpressionEvaluator expressionEvaluatorObject , string expressionString)
+        //public static List<string> ToPostfix(IExpressionEvaluator expressionEvaluatorObject , string expressionString)
+        //{
+        //    List<string> tokens = Tokenize(expressionEvaluatorObject , expressionString);
+        //    Stack<string> operatorStack = new Stack<string>();
+        //    List<string> postFixExpression = new List<string>();
+        //    foreach (string token in tokens)
+        //    {
+        //        if (token == "(")
+        //        {
+        //            operatorStack.Push("(");
+        //        }
+        //        else if (token == ")")
+        //        {
+        //            while (operatorStack.Count > 0 && operatorStack.Peek() != "(")
+        //            {
+        //                postFixExpression.Add(operatorStack.Pop());
+        //            }
+        //            if (operatorStack.Count > 0) operatorStack.Pop();
+        //            else
+        //            {
+        //                throw new Exception(ResourceExceptions.InvalidArgumentError);
+        //            }
+        //        }
+        //        else if (expressionEvaluatorObject.CheckForOperator(token))
+        //        {
+        //            if (operatorStack.Count == 0)
+        //            {
+        //                operatorStack.Push(token);
+        //                continue;
+        //            }
+        //            string tokenString = token;
+        //            while (operatorStack.Count > 0 && !PrecedenceCheck(tokenString, operatorStack.Peek()))
+        //            {
+        //                postFixExpression.Add(operatorStack.Pop());
+        //            }
+        //            operatorStack.Push(tokenString);
+        //        }
+        //        else
+        //        {
+        //            postFixExpression.Add(token);
+        //        }
+        //    }
+        //    while (operatorStack.Count > 0)
+        //    {
+        //        if (operatorStack.Peek() == "(")
+        //        {
+        //            throw new Exception(ResourceExceptions.InvalidArgumentError);
+        //        }
+        //        postFixExpression.Add(operatorStack.Pop());
+        //    }
+        //    return postFixExpression;
+        //}
+        public static List <Token> ToPostfix(IExpressionEvaluator expressionEvaluatorObject, string expressionString)
         {
-            List<string> tokens = Tokenize(expressionEvaluatorObject , expressionString);
-            Stack<string> operatorStack = new Stack<string>();
-            List<string> postFixExpression = new List<string>();
-            foreach (string token in tokens)
+            List<Token> tokens = Tokenize(expressionEvaluatorObject , expressionString);
+            Stack <Token> stack = new Stack<Token>();
+            List<Token> PostFixTokens = new List<Token>();
+            foreach(Token token in tokens)
             {
-                if (token == "(")
+                if (token.TokenCategory == TokenType.Operator)
                 {
-                    operatorStack.Push("(");
-                }
-                else if (token == ")")
-                {
-                    while (operatorStack.Count > 0 && operatorStack.Peek() != "(")
+                    if (token is Paranthesis)
                     {
-                        postFixExpression.Add(operatorStack.Pop());
+                        Paranthesis paranthesis = (Paranthesis)token;
+                        if (paranthesis.paranthesisType == ParanthesisType.Opening)
+                        {
+                            stack.Push(paranthesis);
+                        }
+                        else
+                        {
+                            while (stack.Count > 0 && !(stack.Peek() is Paranthesis))
+                            {
+                                PostFixTokens.Add(stack.Pop());
+                            }
+                            if (stack.Count > 0)
+                            {
+                                stack.Pop();
+                            }
+                            else
+                            {
+                                throw new Exception(ResourceExceptions.InvalidStringError);
+                            }
+                        }
                     }
-                    if (operatorStack.Count > 0) operatorStack.Pop();
                     else
                     {
-                        throw new Exception(ResourceExceptions.InvalidArgumentError);
+                        while (stack.Count > 0 && !PrecedenceCheck(token, stack.Peek()))
+                        {
+                            PostFixTokens.Add(stack.Pop());
+                        }
+                        stack.Push(token);
                     }
-                }
-                else if (expressionEvaluatorObject.CheckForOperator(token))
-                {
-                    if (operatorStack.Count == 0)
-                    {
-                        operatorStack.Push(token);
-                        continue;
-                    }
-                    string tokenString = token;
-                    while (operatorStack.Count > 0 && !PrecedenceCheck(tokenString, operatorStack.Peek()))
-                    {
-                        postFixExpression.Add(operatorStack.Pop());
-                    }
-                    operatorStack.Push(tokenString);
                 }
                 else
                 {
-                    postFixExpression.Add(token);
+                    PostFixTokens.Add(token);
                 }
             }
-            while (operatorStack.Count > 0)
+            while(stack.Count > 0)
             {
-                if (operatorStack.Peek() == "(")
+                if(stack.Peek() is Paranthesis)
                 {
-                    throw new Exception(ResourceExceptions.InvalidArgumentError);
+                    throw new Exception(ResourceExceptions.InvalidStringError);
                 }
-                postFixExpression.Add(operatorStack.Pop());
+                PostFixTokens.Add(stack.Pop());
             }
-            return postFixExpression;
+            return PostFixTokens;
         }
         public static string HandleCustomOperations(string expression)
         {
@@ -127,47 +205,56 @@ namespace Calculator
             }
             return tokens;
         }
-        public static List<string> Tokenize(IExpressionEvaluator expressionEvaluatorObject, string expression)
+        public static List<Token> Tokenize(IExpressionEvaluator expressionEvaluatorObject, string expression)
         {
-            //expression = RegexTokenize(expressionEvaluatorObject , expression);
-            //List<string> expressionsArray = new List<string>(expression.Split(' '));
-            List<string> expressionsArray = RegexTokenize(expressionEvaluatorObject, expression);
-            List<string> tokens = new List<string>();
-            HashSet<string> nonArithmeticOperators = new HashSet<string>(expressionEvaluatorObject.GetNonArithmeticOperators()) ;
-            
-            for (int index = 0; index < expressionsArray.Count; index++)
+            List<Token> tokens = new List<Token>();
+            string currentParsed = "";
+            foreach(char currentCharacter in expression)
             {
-                //string token = expressionsArray[index];
-                //if(token == "-" && (tokens.Count == 0 || tokens[tokens.Count - 1] == "("))
-                //{
-                //    tokens.Add("0");
-                //} 
-                //if (nonArithmeticOperators.Contains(token))
-                //{
-                //    tokens.Add("(");
-                //    int count = 0;
-                //    int closingIndex = index + 1;
-                //    do
-                //    {
-                //        if (CheckForParanthesis(expressionsArray[closingIndex]))
-                //        {
-                //            count += (expressionsArray[closingIndex] == "(" ? 1 : -1);
-                //        }
-                //        closingIndex++;
-
-                //    } while (closingIndex < expressionsArray.Count && count != 0);
-
-                //    if (closingIndex == expressionsArray.Count)
-                //    {
-                //        expressionsArray.Add(")");
-                //    }
-                //    else
-                //    {
-                //        expressionsArray.Insert(closingIndex, ")");
-                //    }
-
-                //}
-                //tokens.Add(token);
+                if (currentCharacter == '(' || currentCharacter == ')')
+                {
+                    tokens.Add(new Paranthesis(currentCharacter.ToString()));
+                }
+                else if (expressionEvaluatorObject.CheckForOperator(currentCharacter.ToString()))
+                {
+                    if (currentParsed != "")
+                    {
+                        double operandValue;
+                        try
+                        {
+                            operandValue = Double.Parse(currentParsed);
+                        }
+                        catch (Exception)
+                        {
+                            throw new Exception(ResourceExceptions.InvalidStringError);
+                        }
+                        tokens.Add(new Operand(operandValue));
+                    }
+                    tokens.Add(((CustomCalculator)expressionEvaluatorObject).GetOperation(currentCharacter.ToString()));
+                    currentParsed = "";
+                }
+                else
+                {
+                    currentParsed += currentCharacter;
+                    if (expressionEvaluatorObject.CheckForOperator(currentParsed))
+                    {
+                        tokens.Add(((CustomCalculator)expressionEvaluatorObject).GetOperation(currentParsed));
+                        currentParsed = "";
+                    }
+                }
+            }
+            if (currentParsed != "")
+            {
+                double operandValue;
+                try
+                {
+                    operandValue = Double.Parse(currentParsed);
+                }
+                catch (Exception)
+                {
+                    throw new Exception(ResourceExceptions.InvalidStringError);
+                }
+                tokens.Add(new Operand(operandValue));
             }
             return tokens;
         }

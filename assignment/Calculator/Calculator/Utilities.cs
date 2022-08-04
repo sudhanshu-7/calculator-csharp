@@ -18,4 +18,8 @@ namespace Calculator
     {
         Lowest , Lower , Higher , Highest , Unary
     }
+    public enum ParanthesisType
+    {
+        Opening, Closing
+    }
 }

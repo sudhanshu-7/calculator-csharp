@@ -73,6 +73,10 @@ namespace Calculator
             }
             return result;
         }
+        public Operation GetOperation(string symbol)
+        {
+            return _operatorMapping[symbol];
+        }
 
         private Dictionary<string, Operation> GetBaseDictionary()
         {
@@ -108,37 +112,65 @@ namespace Calculator
 
         public double Evaluate(string expressionString)
         {
-            List<string> tokens = ExpressionConverter.ToPostfix(this, expressionString);
-            //Debugger.Debug(tokens);
+            List<Token> tokens = ExpressionConverter.ToPostfix(this, expressionString);
+            Debugger.Debug(tokens);
             //Postfix Evaluation Logic
-            Stack<double> tokenStack = new Stack<double>();
-            foreach (string token in tokens)
+            Stack<double> evaluatorStack = new Stack<double>();
+            foreach(Token token in tokens)
             {
-                if (CheckForOperator(token))
+                if(token.TokenCategory == TokenType.Operand)
                 {
-                    IOperation operationObject = _operatorMapping[token];
-                    int operandCount = operationObject.OperandCount;
-                    if (operandCount > tokenStack.Count)
-                    {
-                        throw new Exception(ResourceExceptions.InvalidArgumentError);
-                    }
-                    double[] operands = new double[operandCount];
-                    for (int operandIndex = operandCount - 1; operandIndex >= 0; operandIndex--)
-                    {
-                        operands[operandIndex] = tokenStack.Pop();
-                    }
-                    tokenStack.Push(operationObject.Evaluate(operands));
+                    evaluatorStack.Push(((Operand)token).Value);
                 }
                 else
                 {
-                    tokenStack.Push(Double.Parse(token));
+                    Operation operation = (Operation)token;
+                    if(operation.OperandCount > evaluatorStack.Count)
+                    {
+                        throw new Exception(ResourceExceptions.InvalidArgumentError);
+                    }
+                    double [] operands = new double [operation.OperandCount];
+                    for(int operandIndex = operation.OperandCount - 1; operandIndex >= 0; operandIndex--)
+                    {
+                        operands[operandIndex] = evaluatorStack.Pop();
+                    }
+                    evaluatorStack.Push(operation.Evaluate(operands));
                 }
             }
-            if (tokenStack.Count > 1)
+            if(evaluatorStack.Count > 1)
             {
-                throw new Exception(ResourceExceptions.InvalidStringError);
+                throw new Exception(ResourceExceptions.InvalidArgumentError);
             }
-            return tokenStack.Pop();
+            return evaluatorStack.Pop();
+            //Stack<double> tokenStack = new Stack<double>();
+            //foreach (string token in tokens)
+            //{
+            //    if (CheckForOperator(token))
+            //    {
+            //        Operation operationObject = _operatorMapping[token];
+            //        int operandCount = operationObject.OperandCount;
+            //        if (operandCount > tokenStack.Count)
+            //        {
+            //            throw new Exception(ResourceExceptions.InvalidArgumentError);
+            //        }
+            //        double[] operands = new double[operandCount];
+            //        for (int operandIndex = operandCount - 1; operandIndex >= 0; operandIndex--)
+            //        {
+            //            operands[operandIndex] = tokenStack.Pop();
+            //        }
+            //        tokenStack.Push(operationObject.Evaluate(operands));
+            //    }
+            //    else
+            //    {
+            //        tokenStack.Push(Double.Parse(token));
+            //    }
+            //}
+            //if (tokenStack.Count > 1)
+            //{
+            //    throw new Exception(ResourceExceptions.InvalidStringError);
+            //}
+            //return tokenStack.Pop();
+            //return 1.0D;
         }
         public void RegisterCustomOperation(string operationSymbol, Operation customOperation)
         {

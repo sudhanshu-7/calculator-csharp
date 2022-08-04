@@ -6,37 +6,37 @@ using System.Threading.Tasks;
 using Calculator;
 namespace BetaOne
 {
-    internal class DollarOperation : BinaryOperation
-    {
-        public override double Evaluate(double[] operands)
-        {
-            if (ValidityCheck(operands) == false)
-            {
-                throw new Exception("InvalidArgumentException : Expected 2 arguments");
-            }
-            return (operands[0] * operands[1] + operands[0] / operands[1]);
-        }
-    }
-    internal class CustomOperation : IOperation
-    {
-        public int OperandCount { get; }
-        public CustomOperation()
-        {
-            OperandCount = 4;
-        }
-        public bool ValidityCheck(double[] operands)
-        {
-            return (operands.Length == OperandCount);
-        }
-        public double Evaluate(double [] operands)
-        {
-            if(!ValidityCheck(operands))
-            {
-                throw new Exception("InvalidArgumentException : Expected 4 arguments");
-            }
-            return operands[0] * operands[1] + operands[2] - operands[3];
-        }
-    }
+    //internal class DollarOperation : BinaryOperation
+    //{
+    //    public override double Evaluate(double[] operands)
+    //    {
+    //        if (ValidityCheck(operands) == false)
+    //        {
+    //            throw new Exception("InvalidArgumentException : Expected 2 arguments");
+    //        }
+    //        return (operands[0] * operands[1] + operands[0] / operands[1]);
+    //    }
+    //}
+    //internal class CustomOperation : IOperation
+    //{
+    //    public int OperandCount { get; }
+    //    public CustomOperation()
+    //    {
+    //        OperandCount = 4;
+    //    }
+    //    public bool ValidityCheck(double[] operands)
+    //    {
+    //        return (operands.Length == OperandCount);
+    //    }
+    //    public double Evaluate(double [] operands)
+    //    {
+    //        if(!ValidityCheck(operands))
+    //        {
+    //            throw new Exception("InvalidArgumentException : Expected 4 arguments");
+    //        }
+    //        return operands[0] * operands[1] + operands[2] - operands[3];
+    //    }
+    //}
     internal class Program
     {
         static void PrintMemory(CustomCalculator mem)
@@ -52,18 +52,18 @@ namespace BetaOne
         {
             Object ans;
             CustomCalculator calculator = new CustomCalculator();
-            try
-            {
-                calculator.RegisterCustomOperation("$", new DollarOperation());
-                calculator.RegisterCustomOperation("#", new CustomOperation());
+            //try
+            //{
+                //calculator.RegisterCustomOperation("$", new DollarOperation());
+                //calculator.RegisterCustomOperation("#", new CustomOperation());
                 Console.WriteLine("Enter a Evaluation String: ");
                 String s = Console.ReadLine();
                 ans = calculator.Evaluate(s);
-            }
-            catch (Exception exception)
-            {
-                ans = ("Exception : " + exception.ToString());
-            }
+            //}
+            //catch (Exception exception)
+            //{
+            //    ans = ("Exception : " + exception.ToString());
+            //}
             Console.WriteLine();
             Console.WriteLine("Answer : " + ans);
             calculator.MemoryModification(-5.64);
