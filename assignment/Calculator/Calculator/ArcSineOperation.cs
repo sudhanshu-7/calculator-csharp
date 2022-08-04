@@ -7,6 +7,13 @@ namespace Calculator
         public ArcSineOperation() : base("asin", OperatorAssociativity.LeftToRight, OperatorPrecedence.Unary)
         {
         }
+        public ArcSineOperation(OperatorData operationData):this(operationData.Symbol , operationData.OperatorAssociativity, operationData.OperatorPrecedence)
+        {
+
+        }
+        public ArcSineOperation(string symbol, OperatorAssociativity operatorAssociativity, OperatorPrecedence operatorPrecedence) : base(symbol, operatorAssociativity, operatorPrecedence)
+        {
+        }
 
         public override bool ValidityCheck(double[] operands)
         {

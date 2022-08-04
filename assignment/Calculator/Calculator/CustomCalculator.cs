@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.IO;
+using Newtonsoft.Json;
 namespace Calculator
 {
     public class CustomCalculator : IExpressionEvaluator , IMemoryHandler
@@ -77,34 +78,64 @@ namespace Calculator
         {
             return _operatorMapping[symbol];
         }
+        public List <string> Testing()
+        {
+            List <string> result = new List<string>();
+            using (StreamReader reader = new StreamReader(ResourceExceptions.PathName))
+            {
+                string json = reader.ReadToEnd();
+                dynamic jsonArray = JsonConvert.DeserializeObject(json);
+                //Console.WriteLine(jsonArray.ToString() + " Length : " + jsonArray.Count);
+                dynamic jsonObject = jsonArray[0];
+                //Console.WriteLine("{0} {1}", jsonObject.Add.Symbol, jsonObject.Add.Precedence);
+            }
+
+            return result;
+        }
 
         private Dictionary<string, Operation> GetBaseDictionary()
         {
-            return new Dictionary<string, Operation>
+            try
             {
-                { "+", new AddOperation() },
-                { "-", new SubtractOperation() },
-                { "*", new MultiplyOperation() },
-                { "/", new DivideOperation() },
-                { "^", new ExponentiationOperation() },
-                { "%" , new PercentageOperation() },
-                { "sqt", new SquareRootOperation() },
-                { "sqr" , new SquareOperation() },
-                { "ln", new LogarithmicOperation() },
-                { "log", new LogarithmicBase10Operation() },
-                { "log2", new LogarithmicBase2Operation() },
-                { "recip", new ReciprocalOperation() },
-                { "sin" , new SineOperation() },
-                { "cos" , new CosineOperation() },
-                { "tan" , new TangentOperation() },
-                { "cosec" , new CosecantOperation()},
-                { "sec" , new SecantOperation()},
-                { "cot" , new CotangentOperation()},
-                { "asin" , new ArcSineOperation()},
-                { "acos" , new ArcCosineOperation()},
-                { "atan" , new ArcTangentOperation()}
+                using (StreamReader reader = new StreamReader(ResourceExceptions.PathName))
+                {
+                    string json = reader.ReadToEnd();
+                    dynamic jsonArray = JsonConvert.DeserializeObject(json);
+                    //Console.WriteLine(jsonArray.ToString() + " Length : " + jsonArray.Count);
+                    dynamic jsonObject = jsonArray[0];
+                    //Console.WriteLine("Type of ADD : " + jsonObject.Add.GetType());
+                    //Console.WriteLine(jsonObject["Subtract"].GetType());
+                    return new Dictionary<string, Operation>
+            {
+                { jsonObject["Add"]["Symbol"].ToString(), new AddOperation(ConverterClass.ConvertToOperatorData(jsonObject["Add"]))},
+                { jsonObject["Subtract"]["Symbol"].ToString(), new SubtractOperation(ConverterClass.ConvertToOperatorData(jsonObject["Subtract"])) },
+                { jsonObject["Multiply"]["Symbol"].ToString(), new MultiplyOperation(ConverterClass.ConvertToOperatorData(jsonObject["Multiply"])) },
+                { jsonObject["Divide"]["Symbol"].ToString(), new DivideOperation(ConverterClass.ConvertToOperatorData(jsonObject["Divide"])) },
+                { jsonObject["Power"]["Symbol"].ToString(), new ExponentiationOperation(ConverterClass.ConvertToOperatorData(jsonObject["Power"])) },
+                { jsonObject["Percentage"]["Symbol"].ToString() , new PercentageOperation(ConverterClass.ConvertToOperatorData(jsonObject["Percentage"])) },
+                { jsonObject["SquareRoot"]["Symbol"].ToString(), new SquareRootOperation(ConverterClass.ConvertToOperatorData(jsonObject["SquareRoot"])) },
+                { jsonObject["Square"]["Symbol"].ToString() , new SquareOperation(ConverterClass.ConvertToOperatorData(jsonObject["Square"])) },
+                { jsonObject["LogE"]["Symbol"].ToString(), new LogarithmicOperation(ConverterClass.ConvertToOperatorData(jsonObject["LogE"])) },
+                { jsonObject["Log10"]["Symbol"].ToString(), new LogarithmicBase10Operation(ConverterClass.ConvertToOperatorData(jsonObject["Log10"])) },
+                { jsonObject["Log2"]["Symbol"].ToString(), new LogarithmicBase2Operation(ConverterClass.ConvertToOperatorData(jsonObject["Log2"])) },
+                { jsonObject["Reciprocal"]["Symbol"].ToString(), new ReciprocalOperation(ConverterClass.ConvertToOperatorData(jsonObject["Reciprocal"])) },
+                { jsonObject["Sine"]["Symbol"].ToString() , new SineOperation(ConverterClass.ConvertToOperatorData(jsonObject["Sine"])) },
+                { jsonObject["Cosine"]["Symbol"].ToString() , new CosineOperation(ConverterClass.ConvertToOperatorData(jsonObject["Cosine"])) },
+                { jsonObject["Tangent"]["Symbol"].ToString() , new TangentOperation(ConverterClass.ConvertToOperatorData(jsonObject["Tangent"])) },
+                { jsonObject["Cosecant"]["Symbol"].ToString() , new CosecantOperation(ConverterClass.ConvertToOperatorData(jsonObject["Cosecant"]))},
+                { jsonObject["Secant"]["Symbol"].ToString() , new SecantOperation(ConverterClass.ConvertToOperatorData(jsonObject["Secant"]))},
+                { jsonObject["Cotangent"]["Symbol"].ToString() , new CotangentOperation(ConverterClass.ConvertToOperatorData(jsonObject["Cotangent"]))},
+                { jsonObject["ArcSine"]["Symbol"].ToString() , new ArcSineOperation(ConverterClass.ConvertToOperatorData(jsonObject["ArcSine"]))},
+                { jsonObject["ArcCosine"]["Symbol"].ToString() , new ArcCosineOperation(ConverterClass.ConvertToOperatorData(jsonObject["ArcCosine"]))},
+                { jsonObject["ArcTangent"]["Symbol"].ToString() , new ArcTangentOperation(ConverterClass.ConvertToOperatorData(jsonObject["ArcTangent"]))}
             };
-        }
+                }
+            }
+            catch (Exception)
+            {
+                return new Dictionary<string, Operation>();
+            }
+            }
         public void ClearCustomOperations()
         {
             _operatorMapping = GetBaseDictionary();

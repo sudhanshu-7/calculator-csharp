@@ -129,4 +129,7 @@
   <data name="InvalidStringError" xml:space="preserve">
     <value>Invalid String Entered.</value>
   </data>
+  <data name="PathName" xml:space="preserve">
+    <value>C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\Calculator\Calculator\OperatorDetails.json</value>
+  </data>
 </root>

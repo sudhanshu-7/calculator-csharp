@@ -95,5 +95,14 @@ namespace Calculator {
                 return ResourceManager.GetString("InvalidStringError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\Calculator\Calculator\OperatorDetails.json.
+        /// </summary>
+        internal static string PathName {
+            get {
+                return ResourceManager.GetString("PathName", resourceCulture);
+            }
+        }
     }
 }

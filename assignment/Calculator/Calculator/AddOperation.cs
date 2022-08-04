@@ -7,6 +7,13 @@ namespace Calculator
         public AddOperation() : base("+", OperatorAssociativity.LeftToRight, OperatorPrecedence.Lower)
         {
         }
+        public AddOperation(OperatorData operationData):this(operationData.Symbol , operationData.OperatorAssociativity, operationData.OperatorPrecedence)
+        {
+
+        }
+        public AddOperation(string symbol, OperatorAssociativity operatorAssociativity, OperatorPrecedence operatorPrecedence) : base(symbol, operatorAssociativity, operatorPrecedence)
+        {
+        }
 
         public override double Evaluate(double[] operands)
         {

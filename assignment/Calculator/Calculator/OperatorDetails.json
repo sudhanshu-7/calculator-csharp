@@ -1,0 +1,110 @@
+[
+  {
+    "Add": {
+      "Symbol": "+",
+      "Precedence": "Lower",
+      "Associativity": "LeftToRight"
+    },
+    "Subtract": {
+      "Symbol": "-",
+      "Precedence": "Lower",
+      "Associativity": "LeftToRight"
+    },
+    "Multiply": {
+      "Symbol": "*",
+      "Precedence": "Higher",
+      "Associativity": "LeftToRight"
+    },
+    "Divide": {
+      "Symbol": "/",
+      "Precedence": "Higher",
+      "Associativity": "LeftToRight"
+    },
+    "Power": {
+      "Symbol": "^",
+      "Precedence": "Highest",
+      "Associativity": "RightToLeft"
+    },
+    "Log10": {
+      "Symbol": "log",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "Reciprocal": {
+      "Symbol": "recip",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "LogE": {
+      "Symbol": "ln",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "Log2": {
+      "Symbol": "log2",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "SquareRoot": {
+      "Symbol": "sqrt",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "Square": {
+      "Symbol": "sqr",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "Percentage": {
+      "Symbol": "%",
+      "Precedence": "Higher",
+      "Associativity": "LeftToRight"
+    },
+    "Sine": {
+      "Symbol": "sin",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "Cosine": {
+      "Symbol": "cos",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "Cosecant": {
+      "Symbol": "cosec",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "Cotangent": {
+      "Symbol": "cot",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "Secant": {
+      "Symbol": "sec",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "Tangent": {
+      "Symbol": "tan",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "ArcCosine": {
+      "Symbol": "acos",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "ArcSine": {
+      "Symbol": "asin",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    },
+    "ArcTangent": {
+      "Symbol": "atan",
+      "Precedence": "Unary",
+      "Associativity": "LeftToRight"
+    }
+
+  }
+]

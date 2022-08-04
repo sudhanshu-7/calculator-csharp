@@ -28,6 +28,7 @@ namespace Calculator
 
         //    return true;
         //}
+        
         public static bool PrecedenceCheck(Token operatorToBePlaced, Token operatorOnStackTop)
         {
             if (operatorOnStackTop is Paranthesis)
@@ -36,19 +37,19 @@ namespace Calculator
             }
             Operation placingOperation = (Operation)operatorToBePlaced;
             Operation stackTopOperation = (Operation)operatorOnStackTop;
-            Console.WriteLine("Here for {1} ({3}) & {2} Associativity {0}!",(placingOperation.OperatorAssociativity),placingOperation.ToString(),stackTopOperation.ToString() , placingOperation.OperatorAssociativity);
+            //Console.WriteLine("Here for {1} ({3}) & {2} Associativity {0}!",(placingOperation.OperatorAssociativity),placingOperation.ToString(),stackTopOperation.ToString() , placingOperation.OperatorAssociativity);
 
             if (placingOperation.OperatorPrecedence > stackTopOperation.OperatorPrecedence)
             {
-                Console.WriteLine(" > returing true");
+                //Console.WriteLine(" > returing true");
                 return true;
             }else if(placingOperation.OperatorPrecedence < stackTopOperation.OperatorPrecedence)
             {
-                Console.WriteLine(" < returing true");
+                //Console.WriteLine(" < returing true");
                 return false;
             }else if(placingOperation.OperatorPrecedence == stackTopOperation.OperatorPrecedence)
             {
-                Console.WriteLine("== for {1} ({3}) & {2} Returning {0}!",(placingOperation.OperatorAssociativity == OperatorAssociativity.RightToLeft),placingOperation.ToString(),stackTopOperation.ToString() , placingOperation.OperatorAssociativity);
+                //Console.WriteLine("== for {1} ({3}) & {2} Returning {0}!",(placingOperation.OperatorAssociativity == OperatorAssociativity.RightToLeft),placingOperation.ToString(),stackTopOperation.ToString() , placingOperation.OperatorAssociativity);
                 return placingOperation.OperatorAssociativity == OperatorAssociativity.RightToLeft;
             }else return true;
         }
@@ -226,7 +227,7 @@ namespace Calculator
                         }
                         catch (Exception)
                         {
-                            Console.WriteLine("Exception Because of Parsing: "+  currentParsed);
+                            //Console.WriteLine("Exception Because of Parsing: "+  currentParsed);
                             throw new Exception(ResourceExceptions.InvalidStringError);
                         }
                         tokens.Add(new Operand(operandValue));
@@ -246,7 +247,7 @@ namespace Calculator
                         catch (Exception)
                         {
 
-                            Console.WriteLine("Exception Because of Parsing: "+ currentParsed);
+                            //Console.WriteLine("Exception Because of Parsing: "+ currentParsed);
                             throw new Exception(ResourceExceptions.InvalidStringError);
                         }
                         tokens.Add(new Operand(operandValue));
@@ -274,7 +275,7 @@ namespace Calculator
                 catch (Exception)
                 {
 
-                    Console.WriteLine("Exception Because of Parsing: "+ currentParsed);
+                    //Console.WriteLine("Exception Because of Parsing: "+ currentParsed);
                     throw new Exception(ResourceExceptions.InvalidStringError);
                 }
                 tokens.Add(new Operand(operandValue));

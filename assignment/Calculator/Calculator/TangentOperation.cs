@@ -8,6 +8,14 @@ namespace Calculator
         {
 
         }
+        public TangentOperation(OperatorData operationData):this(operationData.Symbol , operationData.OperatorAssociativity, operationData.OperatorPrecedence)
+        {
+
+        }
+        public TangentOperation(string symbol, OperatorAssociativity operatorAssociativity, OperatorPrecedence operatorPrecedence) : base(symbol, operatorAssociativity, operatorPrecedence)
+        {
+        }
+
         public override double Evaluate(double[] operands)
         {
             if (!ValidityCheck(operands))

@@ -7,6 +7,14 @@ namespace Calculator
         public ArcCosineOperation() : base("acos", OperatorAssociativity.LeftToRight, OperatorPrecedence.Unary)
         {
         }
+        public ArcCosineOperation(OperatorData operationData):this(operationData.Symbol , operationData.OperatorAssociativity, operationData.OperatorPrecedence)
+        {
+
+        }
+        public ArcCosineOperation(string symbol, OperatorAssociativity operatorAssociativity, OperatorPrecedence operatorPrecedence) : base(symbol, operatorAssociativity, operatorPrecedence)
+        {
+        }
+
 
         public override bool ValidityCheck(double[] operands)
         {

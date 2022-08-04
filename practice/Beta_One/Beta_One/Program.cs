@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Calculator;
 namespace BetaOne
@@ -48,38 +50,54 @@ namespace BetaOne
             }
             Console.WriteLine(" X ");
         }
-        static void Main()
+    //    static void Main()
+    //    {
+    //        Object ans;
+    //        CustomCalculator calculator = new CustomCalculator();
+    //        //try
+    //        //{
+    //            //calculator.RegisterCustomOperation("$", new DollarOperation());
+    //            //calculator.RegisterCustomOperation("#", new CustomOperation());
+    //            Console.WriteLine("Enter a Evaluation String: ");
+    //            String s = Console.ReadLine();
+    //            ans = calculator.Evaluate(s);
+    //        //}
+    //        //catch (Exception exception)
+    //        //{
+    //        //    ans = ("Exception : " + exception.ToString());
+    //        //}
+    //        Console.WriteLine();
+    //        Console.WriteLine("Answer : " + ans);
+    //        calculator.MemoryModification(-5.64);
+    //        calculator.MemoryModification(6);
+    //        calculator.MemorySave(45);
+    //        calculator.MemorySave(56);
+    //        calculator.MemoryModification(-50);
+    //        //PrintMemory(calculator);
+    //        Console.ReadKey();
+    //        //string inputString  = Console.ReadLine();
+    //        //List <string> tokens = ExpressionConverter.RegexTokenize(new CustomCalculator(), inputString);
+    //        //foreach(string token in tokens)
+    //        //{
+    //        //    Console.WriteLine($"Token : {token} Length : {token.Length}");
+    //        //}
+    //        //Console.ReadKey();
+    //    }
+     static void Main()
         {
-            Object ans;
-            CustomCalculator calculator = new CustomCalculator();
-            //try
+            //using (StreamReader r = new StreamReader("../../Data.json"))
             //{
-                //calculator.RegisterCustomOperation("$", new DollarOperation());
-                //calculator.RegisterCustomOperation("#", new CustomOperation());
-                Console.WriteLine("Enter a Evaluation String: ");
-                String s = Console.ReadLine();
-                ans = calculator.Evaluate(s);
+            //    string json = r.ReadToEnd();
+            //    dynamic array = JsonConvert.DeserializeObject(json);
+            //    foreach(var item in array)
+            //    {
+            //        Console.WriteLine("Key : {0} Value : {1}", "key" ,item.key);
+            //    }
             //}
-            //catch (Exception exception)
-            //{
-            //    ans = ("Exception : " + exception.ToString());
-            //}
-            Console.WriteLine();
-            Console.WriteLine("Answer : " + ans);
-            calculator.MemoryModification(-5.64);
-            calculator.MemoryModification(6);
-            calculator.MemorySave(45);
-            calculator.MemorySave(56);
-            calculator.MemoryModification(-50);
-            //PrintMemory(calculator);
+            CustomCalculator mem = new CustomCalculator();
+            //mem.Testing();
+            Console.WriteLine(mem.Evaluate("5+6*2"));
             Console.ReadKey();
-            //string inputString  = Console.ReadLine();
-            //List <string> tokens = ExpressionConverter.RegexTokenize(new CustomCalculator(), inputString);
-            //foreach(string token in tokens)
-            //{
-            //    Console.WriteLine($"Token : {token} Length : {token.Length}");
-            //}
-            //Console.ReadKey();
         }
     }
 }

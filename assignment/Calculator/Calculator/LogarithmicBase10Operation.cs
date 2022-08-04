@@ -8,6 +8,14 @@ namespace Calculator
         {
 
         }
+        public LogarithmicBase10Operation(OperatorData operationData):this(operationData.Symbol , operationData.OperatorAssociativity, operationData.OperatorPrecedence)
+        {
+
+        }
+        public LogarithmicBase10Operation(string symbol, OperatorAssociativity operatorAssociativity, OperatorPrecedence operatorPrecedence) : base(symbol, operatorAssociativity, operatorPrecedence)
+        {
+        }
+
         public override double Evaluate(double[] operands)
         {
             if (!ValidityCheck(operands))

@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +49,7 @@
     <Compile Include="ArcSineOperation.cs" />
     <Compile Include="ArcTangentOperation.cs" />
     <Compile Include="BinaryOperation.cs" />
+    <Compile Include="ConverterClass.cs" />
     <Compile Include="Debugger.cs" />
     <Compile Include="CustomCalculator.cs" />
     <Compile Include="CosecantOperation.cs" />
@@ -89,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CalculatorClassDiagram.cd" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ResourceExceptions.resx">
