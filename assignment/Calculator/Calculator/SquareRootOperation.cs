@@ -4,7 +4,7 @@ namespace Calculator
 {
     public class SquareRootOperation : UnaryOperation
     {
-        public SquareRootOperation() : base("sqrt", OperatorAssociativity.LeftToRight, OperatorPrecedence.Unary)
+        public SquareRootOperation() : base("sqt", OperatorAssociativity.LeftToRight, OperatorPrecedence.Unary)
         {
 
         }

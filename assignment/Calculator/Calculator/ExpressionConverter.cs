@@ -36,19 +36,21 @@ namespace Calculator
             }
             Operation placingOperation = (Operation)operatorToBePlaced;
             Operation stackTopOperation = (Operation)operatorOnStackTop;
-            
-            if(placingOperation.OperatorPrecedence > stackTopOperation.OperatorPrecedence)
+            Console.WriteLine("Here for {1} ({3}) & {2} Associativity {0}!",(placingOperation.OperatorAssociativity),placingOperation.ToString(),stackTopOperation.ToString() , placingOperation.OperatorAssociativity);
+
+            if (placingOperation.OperatorPrecedence > stackTopOperation.OperatorPrecedence)
             {
+                Console.WriteLine(" > returing true");
                 return true;
             }else if(placingOperation.OperatorPrecedence < stackTopOperation.OperatorPrecedence)
             {
+                Console.WriteLine(" < returing true");
                 return false;
             }else if(placingOperation.OperatorPrecedence == stackTopOperation.OperatorPrecedence)
             {
-                //Console.WriteLine("Here for {1} ({3}) & {2} Returning {0}!",(placingOperation.OperatorAssociativity == OperatorAssociativity.RightToLeft),placingOperation.ToString(),stackTopOperation.ToString() , placingOperation.OperatorAssociativity);
+                Console.WriteLine("== for {1} ({3}) & {2} Returning {0}!",(placingOperation.OperatorAssociativity == OperatorAssociativity.RightToLeft),placingOperation.ToString(),stackTopOperation.ToString() , placingOperation.OperatorAssociativity);
                 return placingOperation.OperatorAssociativity == OperatorAssociativity.RightToLeft;
-            }
-            return true;
+            }else return true;
         }
         //public static List<string> ToPostfix(IExpressionEvaluator expressionEvaluatorObject , string expressionString)
         //{
@@ -105,6 +107,7 @@ namespace Calculator
         public static List <Token> ToPostfix(IExpressionEvaluator expressionEvaluatorObject, string expressionString)
         {
             List<Token> tokens = Tokenize(expressionEvaluatorObject , expressionString);
+            Debugger.Debug(tokens);
             Stack <Token> stack = new Stack<Token>();
             List<Token> PostFixTokens = new List<Token>();
             foreach(Token token in tokens)
@@ -120,6 +123,7 @@ namespace Calculator
                         }
                         else
                         {
+
                             while (stack.Count > 0 && !(stack.Peek() is Paranthesis))
                             {
                                 PostFixTokens.Add(stack.Pop());
@@ -213,7 +217,22 @@ namespace Calculator
             {
                 if (currentCharacter == '(' || currentCharacter == ')')
                 {
+                    if (currentParsed != "")
+                    {
+                        double operandValue;
+                        try
+                        {
+                            operandValue = Double.Parse(currentParsed);
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Exception Because of Parsing: "+  currentParsed);
+                            throw new Exception(ResourceExceptions.InvalidStringError);
+                        }
+                        tokens.Add(new Operand(operandValue));
+                    }
                     tokens.Add(new Paranthesis(currentCharacter.ToString()));
+                    currentParsed = "";
                 }
                 else if (expressionEvaluatorObject.CheckForOperator(currentCharacter.ToString()))
                 {
@@ -226,6 +245,8 @@ namespace Calculator
                         }
                         catch (Exception)
                         {
+
+                            Console.WriteLine("Exception Because of Parsing: "+ currentParsed);
                             throw new Exception(ResourceExceptions.InvalidStringError);
                         }
                         tokens.Add(new Operand(operandValue));
@@ -252,6 +273,8 @@ namespace Calculator
                 }
                 catch (Exception)
                 {
+
+                    Console.WriteLine("Exception Because of Parsing: "+ currentParsed);
                     throw new Exception(ResourceExceptions.InvalidStringError);
                 }
                 tokens.Add(new Operand(operandValue));

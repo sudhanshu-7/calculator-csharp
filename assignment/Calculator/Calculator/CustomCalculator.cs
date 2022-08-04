@@ -88,7 +88,7 @@ namespace Calculator
                 { "/", new DivideOperation() },
                 { "^", new ExponentiationOperation() },
                 { "%" , new PercentageOperation() },
-                { "sqrt", new SquareRootOperation() },
+                { "sqt", new SquareRootOperation() },
                 { "sqr" , new SquareOperation() },
                 { "ln", new LogarithmicOperation() },
                 { "log", new LogarithmicBase10Operation() },
