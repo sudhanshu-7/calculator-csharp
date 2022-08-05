@@ -7,15 +7,17 @@ namespace Calculator
     public class CustomCalculator : IExpressionEvaluator , IMemoryHandler
     {
         #region Private Fields
-        private Dictionary<string, Operation> _operatorMapping;
-
+        private readonly Dictionary<string, Operation> _operatorMapping;
+        private readonly Newtonsoft.Json.Linq.JObject _basicOperatorsJSON;
         private readonly Stack<double> _memory;
         #endregion
 
         public CustomCalculator()
         {
-            _operatorMapping = GetBaseDictionary();
+            _operatorMapping = new Dictionary<string,Operation> ();
             _memory = new Stack<double>();
+            _basicOperatorsJSON = GetBasicOperationsFromJSON(ResourceExceptions.PathName);
+            GenerateBaseDictionary();
         }
 
         #region Memory Functions
@@ -49,102 +51,84 @@ namespace Calculator
         #endregion
 
         #region Evaluate Functions
+        private Newtonsoft.Json.Linq.JObject GetBasicOperationsFromJSON(string pathName)
+        {
+            try
+            {
+                using (StreamReader reader = new StreamReader(pathName))
+                {
+                    // Console.WriteLine("Inside GetBasicOperationsFromJSON");
+                    string json = reader.ReadToEnd();
+                    dynamic jsonArray = JsonConvert.DeserializeObject(json);
+                    var jsonObject = jsonArray[0];
+                    return jsonArray[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+        }
         public bool CheckForOperator(string operatorSymbol)
         {
             return _operatorMapping.ContainsKey(operatorSymbol);
-        }
-        public List<string> GetNonArithmeticOperators()
-        {
-            List<string> result = new List<string>();
-            foreach (string operatorSymbol in _operatorMapping.Keys)
-            {
-                if (!(_operatorMapping[operatorSymbol] is BinaryOperation))
-                {
-                    result.Add(operatorSymbol);
-                }
-            }
-            return result;
-        }
-        public List<string> GetTokens()
-        {
-            List<string> result = new List<string>();
-            foreach (string key in _operatorMapping.Keys)
-            {
-                result.Add(key);
-            }
-            return result;
         }
         public Operation GetOperation(string symbol)
         {
             return _operatorMapping[symbol];
         }
-        public List <string> Testing()
+        private void AddBasicOperationsToDictionary(Operation operationObject)
         {
-            List <string> result = new List<string>();
-            using (StreamReader reader = new StreamReader(ResourceExceptions.PathName))
-            {
-                string json = reader.ReadToEnd();
-                dynamic jsonArray = JsonConvert.DeserializeObject(json);
-                //Console.WriteLine(jsonArray.ToString() + " Length : " + jsonArray.Count);
-                dynamic jsonObject = jsonArray[0];
-                //Console.WriteLine("{0} {1}", jsonObject.Add.Symbol, jsonObject.Add.Precedence);
-            }
-
-            return result;
-        }
-
-        private Dictionary<string, Operation> GetBaseDictionary()
-        {
+            string key = operationObject.GetType().Name;
             try
             {
-                using (StreamReader reader = new StreamReader(ResourceExceptions.PathName))
-                {
-                    string json = reader.ReadToEnd();
-                    dynamic jsonArray = JsonConvert.DeserializeObject(json);
-                    //Console.WriteLine(jsonArray.ToString() + " Length : " + jsonArray.Count);
-                    dynamic jsonObject = jsonArray[0];
-                    //Console.WriteLine("Type of ADD : " + jsonObject.Add.GetType());
-                    //Console.WriteLine(jsonObject["Subtract"].GetType());
-                    return new Dictionary<string, Operation>
+                operationObject.SetOperator(ConverterClass.ConvertToOperatorData((Newtonsoft.Json.Linq.JObject)_basicOperatorsJSON[key]), operationObject.OperandCount);
+                _operatorMapping[operationObject.OperationSymbol] = operationObject;
+                // Console.WriteLine("Successfully Added : " + key);
+            }
+            catch (Exception ex)
             {
-                { jsonObject["Add"]["Symbol"].ToString(), new AddOperation(ConverterClass.ConvertToOperatorData(jsonObject["Add"]))},
-                { jsonObject["Subtract"]["Symbol"].ToString(), new SubtractOperation(ConverterClass.ConvertToOperatorData(jsonObject["Subtract"])) },
-                { jsonObject["Multiply"]["Symbol"].ToString(), new MultiplyOperation(ConverterClass.ConvertToOperatorData(jsonObject["Multiply"])) },
-                { jsonObject["Divide"]["Symbol"].ToString(), new DivideOperation(ConverterClass.ConvertToOperatorData(jsonObject["Divide"])) },
-                { jsonObject["Power"]["Symbol"].ToString(), new ExponentiationOperation(ConverterClass.ConvertToOperatorData(jsonObject["Power"])) },
-                { jsonObject["Percentage"]["Symbol"].ToString() , new PercentageOperation(ConverterClass.ConvertToOperatorData(jsonObject["Percentage"])) },
-                { jsonObject["SquareRoot"]["Symbol"].ToString(), new SquareRootOperation(ConverterClass.ConvertToOperatorData(jsonObject["SquareRoot"])) },
-                { jsonObject["Square"]["Symbol"].ToString() , new SquareOperation(ConverterClass.ConvertToOperatorData(jsonObject["Square"])) },
-                { jsonObject["LogE"]["Symbol"].ToString(), new LogarithmicOperation(ConverterClass.ConvertToOperatorData(jsonObject["LogE"])) },
-                { jsonObject["Log10"]["Symbol"].ToString(), new LogarithmicBase10Operation(ConverterClass.ConvertToOperatorData(jsonObject["Log10"])) },
-                { jsonObject["Log2"]["Symbol"].ToString(), new LogarithmicBase2Operation(ConverterClass.ConvertToOperatorData(jsonObject["Log2"])) },
-                { jsonObject["Reciprocal"]["Symbol"].ToString(), new ReciprocalOperation(ConverterClass.ConvertToOperatorData(jsonObject["Reciprocal"])) },
-                { jsonObject["Sine"]["Symbol"].ToString() , new SineOperation(ConverterClass.ConvertToOperatorData(jsonObject["Sine"])) },
-                { jsonObject["Cosine"]["Symbol"].ToString() , new CosineOperation(ConverterClass.ConvertToOperatorData(jsonObject["Cosine"])) },
-                { jsonObject["Tangent"]["Symbol"].ToString() , new TangentOperation(ConverterClass.ConvertToOperatorData(jsonObject["Tangent"])) },
-                { jsonObject["Cosecant"]["Symbol"].ToString() , new CosecantOperation(ConverterClass.ConvertToOperatorData(jsonObject["Cosecant"]))},
-                { jsonObject["Secant"]["Symbol"].ToString() , new SecantOperation(ConverterClass.ConvertToOperatorData(jsonObject["Secant"]))},
-                { jsonObject["Cotangent"]["Symbol"].ToString() , new CotangentOperation(ConverterClass.ConvertToOperatorData(jsonObject["Cotangent"]))},
-                { jsonObject["ArcSine"]["Symbol"].ToString() , new ArcSineOperation(ConverterClass.ConvertToOperatorData(jsonObject["ArcSine"]))},
-                { jsonObject["ArcCosine"]["Symbol"].ToString() , new ArcCosineOperation(ConverterClass.ConvertToOperatorData(jsonObject["ArcCosine"]))},
-                { jsonObject["ArcTangent"]["Symbol"].ToString() , new ArcTangentOperation(ConverterClass.ConvertToOperatorData(jsonObject["ArcTangent"]))}
-            };
-                }
+                Console.WriteLine(ex.ToString());
+                // Console.WriteLine("Unsuccessful in adding : " + key);
             }
-            catch (Exception)
-            {
-                return new Dictionary<string, Operation>();
-            }
-            }
+
+        }
+        private void GenerateBaseDictionary()
+        {
+            AddBasicOperationsToDictionary(new AddOperation());
+            AddBasicOperationsToDictionary(new MultiplyOperation());
+            AddBasicOperationsToDictionary(new DivideOperation());
+            AddBasicOperationsToDictionary(new SubtractOperation());
+            AddBasicOperationsToDictionary(new ExponentiationOperation());
+            AddBasicOperationsToDictionary(new PercentageOperation());
+            AddBasicOperationsToDictionary(new LogarithmicBase2Operation());
+            AddBasicOperationsToDictionary(new LogarithmicBase10Operation());
+            AddBasicOperationsToDictionary(new LogarithmicOperation());
+            AddBasicOperationsToDictionary(new SineOperation());
+            AddBasicOperationsToDictionary(new CosineOperation());
+            AddBasicOperationsToDictionary(new TangentOperation());
+            AddBasicOperationsToDictionary(new CotangentOperation());
+            AddBasicOperationsToDictionary(new SecantOperation());
+            AddBasicOperationsToDictionary(new CosecantOperation());
+            AddBasicOperationsToDictionary(new SquareOperation());
+            AddBasicOperationsToDictionary(new SquareRootOperation());
+            AddBasicOperationsToDictionary(new ReciprocalOperation());
+            AddBasicOperationsToDictionary(new ArcSineOperation());
+            AddBasicOperationsToDictionary(new ArcCosineOperation());
+            AddBasicOperationsToDictionary(new ArcTangentOperation());
+             
+        }
         public void ClearCustomOperations()
         {
-            _operatorMapping = GetBaseDictionary();
+            _operatorMapping.Clear();
+            GenerateBaseDictionary();
         }
 
         public double Evaluate(string expressionString)
         {
             List<Token> tokens = ExpressionConverter.ToPostfix(this, expressionString);
-            Debugger.Debug(tokens);
+
             //Postfix Evaluation Logic
             Stack<double> evaluatorStack = new Stack<double>();
             foreach(Token token in tokens)
@@ -173,35 +157,6 @@ namespace Calculator
                 throw new Exception(ResourceExceptions.InvalidArgumentError);
             }
             return evaluatorStack.Pop();
-            //Stack<double> tokenStack = new Stack<double>();
-            //foreach (string token in tokens)
-            //{
-            //    if (CheckForOperator(token))
-            //    {
-            //        Operation operationObject = _operatorMapping[token];
-            //        int operandCount = operationObject.OperandCount;
-            //        if (operandCount > tokenStack.Count)
-            //        {
-            //            throw new Exception(ResourceExceptions.InvalidArgumentError);
-            //        }
-            //        double[] operands = new double[operandCount];
-            //        for (int operandIndex = operandCount - 1; operandIndex >= 0; operandIndex--)
-            //        {
-            //            operands[operandIndex] = tokenStack.Pop();
-            //        }
-            //        tokenStack.Push(operationObject.Evaluate(operands));
-            //    }
-            //    else
-            //    {
-            //        tokenStack.Push(Double.Parse(token));
-            //    }
-            //}
-            //if (tokenStack.Count > 1)
-            //{
-            //    throw new Exception(ResourceExceptions.InvalidStringError);
-            //}
-            //return tokenStack.Pop();
-            //return 1.0D;
         }
         public void RegisterCustomOperation(string operationSymbol, Operation customOperation)
         {

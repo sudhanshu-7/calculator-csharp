@@ -33,6 +33,7 @@ namespace Calculator
         }
         public static OperatorData ConvertToOperatorData(Newtonsoft.Json.Linq.JObject obj)
         {
+            if(obj == null) throw new ArgumentNullException(nameof(obj));
             return new OperatorData(obj["Symbol"].ToString(), GetEnumFromString<OperatorAssociativity>(obj["Associativity"].ToString()), GetEnumFromString<OperatorPrecedence>(obj["Precedence"].ToString()));
         }
     }

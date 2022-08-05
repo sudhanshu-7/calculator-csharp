@@ -1,106 +1,106 @@
 [
   {
-    "Add": {
+    "AddOperation": {
       "Symbol": "+",
       "Precedence": "Lower",
       "Associativity": "LeftToRight"
     },
-    "Subtract": {
+    "SubtractOperation": {
       "Symbol": "-",
       "Precedence": "Lower",
       "Associativity": "LeftToRight"
     },
-    "Multiply": {
+    "MultiplyOperation": {
       "Symbol": "*",
       "Precedence": "Higher",
       "Associativity": "LeftToRight"
     },
-    "Divide": {
+    "DivideOperation": {
       "Symbol": "/",
       "Precedence": "Higher",
       "Associativity": "LeftToRight"
     },
-    "Power": {
+    "ExponentiationOperation": {
       "Symbol": "^",
       "Precedence": "Highest",
       "Associativity": "RightToLeft"
     },
-    "Log10": {
+    "LogarithmicBase10Operation": {
       "Symbol": "log",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "Reciprocal": {
+    "ReciprocalOperation": {
       "Symbol": "recip",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "LogE": {
+    "LogarithmicOperation": {
       "Symbol": "ln",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "Log2": {
+    "LogarithmicBase2Operation": {
       "Symbol": "log2",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "SquareRoot": {
+    "SquareRootOperation": {
       "Symbol": "sqt",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "Square": {
+    "SquareOperation": {
       "Symbol": "sqr",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "Percentage": {
+    "PercentageOperation": {
       "Symbol": "%",
       "Precedence": "Higher",
       "Associativity": "LeftToRight"
     },
-    "Sine": {
+    "SineOperation": {
       "Symbol": "sin",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "Cosine": {
+    "CosineOperation": {
       "Symbol": "cos",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "Cosecant": {
+    "CosecantOperation": {
       "Symbol": "cosec",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "Cotangent": {
+    "CotangentOperation": {
       "Symbol": "cot",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "Secant": {
+    "SecantOperation": {
       "Symbol": "sec",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "Tangent": {
+    "TangentOperation": {
       "Symbol": "tan",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "ArcCosine": {
+    "ArcCosineOperation": {
       "Symbol": "acos",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "ArcSine": {
+    "ArcSineOperation": {
       "Symbol": "asin",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
     },
-    "ArcTangent": {
+    "ArcTangentOperation": {
       "Symbol": "atan",
       "Precedence": "Unary",
       "Associativity": "LeftToRight"
