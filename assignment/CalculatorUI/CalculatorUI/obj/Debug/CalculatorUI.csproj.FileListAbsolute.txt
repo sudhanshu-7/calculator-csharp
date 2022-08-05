@@ -1,0 +1,16 @@
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\bin\Debug\CalculatorUI.exe.config
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\bin\Debug\CalculatorUI.exe
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\bin\Debug\CalculatorUI.pdb
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\obj\Debug\CalculatorUI.csproj.AssemblyReference.cache
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\obj\Debug\CalculatorUI.csproj.SuggestedBindingRedirects.cache
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\obj\Debug\CalculatorUI.Calculator.resources
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\obj\Debug\CalculatorUI.Properties.Resources.resources
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\obj\Debug\CalculatorUI.csproj.GenerateResource.cache
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\obj\Debug\CalculatorUI.csproj.CoreCompileInputs.cache
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\obj\Debug\CalculatorUI.exe
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\obj\Debug\CalculatorUI.pdb
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\bin\Debug\Calculator.dll
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\bin\Debug\Calculator.pdb
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\bin\Debug\Newtonsoft.Json.xml
+C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorUI\CalculatorUI\obj\Debug\CalculatorUI.csproj.CopyComplete
