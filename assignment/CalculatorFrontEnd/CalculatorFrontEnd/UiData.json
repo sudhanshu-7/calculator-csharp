@@ -1,0 +1,194 @@
+[
+    {
+        "Addition" : {
+            "Text" : "+",
+            "Decoration" : "Gold",
+            "Row":"4",
+            "Column" : "3",
+            "ButtonType" : "BinaryOperator"
+        },
+        "Percentage" : {
+            "Text" : "%",
+            "Decoration" : "Gold",
+            "Row":"0",
+            "Column" : "0",
+            "ButtonType" : "BinaryOperator"
+        },
+    
+        "Clear Entry" : {
+            "Text" : "CE",
+            "Decoration" : "Gold",
+            "Row":"0",
+            "Column" : "1",
+            "ButtonType" : "ClearEntry"
+        },
+
+        "Clear" : {
+            "Text" : "C",
+            "Decoration" : "Gold",
+            "Row":"0",
+            "Column" : "2",
+            "ButtonType" : "ClearAll"
+        },
+
+        "Backspace" : {
+            "Text" : "<-",
+            "Decoration" : "Gold",
+            "Row":"0",
+            "Column" : "3",
+            "ButtonType" : "Backspace"
+        },
+
+        "Reciprocal" : {
+            "Text" : "1/x",
+            "Decoration" : "Gold",
+            "Row":"1",
+            "Column" : "0",
+            "ButtonType" : "UnaryOperator"
+        },
+
+        "Square" : {
+            "Text" : "x^2",
+            "Decoration" : "Gold",
+            "Row":"1",
+            "Column" : "1",
+            "ButtonType" : "UnaryOperator"
+        },
+
+        "Square Root" : {
+            "Text" : "√x",
+            "Decoration" : "Gold",
+            "Row":"1",
+            "Column" : "2",
+            "ButtonType" : "UnaryOperator"
+        },
+
+        "Divide" : {
+            "Text" : "÷",
+            "Decoration" : "Gold",
+            "Row":"1",
+            "Column" : "3",
+            "ButtonType" : "BinaryOperator"
+        },
+
+        "Seven" : {
+            "Text" : "7",
+            "Decoration" : "Normal",
+            "Row":"2",
+            "Column" : "0",
+            "ButtonType" : "Numeric"
+        },
+
+        "Eight" : {
+            "Text" : "8",
+            "Decoration" : "Normal",
+            "Row":"2",
+            "Column" : "1",
+            "ButtonType" : "Numeric"
+        },
+
+        "Nine" : {
+            "Text" : "9",
+            "Decoration" : "Normal",
+            "Row":"2",
+            "Column" : "2",
+            "ButtonType" : "Numeric"
+        },
+
+        "Multiply" : {
+            "Text" : "*",
+            "Decoration" : "Gold",
+            "Row":"2",
+            "Column" : "3",
+            "ButtonType" : "BinaryOperator"
+        },
+
+        "Four" : {
+            "Text" : "4",
+            "Decoration" : "Normal",
+            "Row":"3",
+            "Column" : "0",
+            "ButtonType" : "Numeric"
+        },
+
+        "Five" : {
+            "Text" : "5",
+            "Decoration" : "Normal",
+            "Row":"3",
+            "Column" : "1",
+            "ButtonType" : "Numeric"
+        },
+
+        "Six" : {
+            "Text" : "6",
+            "Decoration" : "Normal",
+            "Row":"3",
+            "Column" : "2",
+            "ButtonType" : "Numeric"
+        },
+
+        "Subtract" : {
+            "Text" : "-",
+            "Decoration" : "Gold",
+            "Row":"3",
+            "Column" : "3",
+            "ButtonType" : "BinaryOperator"
+        },
+
+        "One" : {
+            "Text" : "1",
+            "Decoration" : "Normal",
+            "Row":"4",
+            "Column" : "0",
+            "ButtonType" : "Numeric"
+        },
+
+        "Two" : {
+            "Text" : "2",
+            "Decoration" : "Normal",
+            "Row":"4",
+            "Column" : "1",
+            "ButtonType" : "Numeric"
+        },
+
+        "Three" : {
+            "Text" : "3",
+            "Decoration" : "Normal",
+            "Row":"4",
+            "Column" : "2",
+            "ButtonType" : "Numeric"
+        },
+
+        "Negate" : {
+            "Text" : "+/-",
+            "Decoration" : "Dark",
+            "Row":"5",
+            "Column" : "0",
+            "ButtonType" : "UnaryOperator"
+        },
+
+        "Zero" : {
+            "Text" : "0",
+            "Decoration" : "Normal",
+            "Row":"5",
+            "Column" : "1",
+            "ButtonType" : "Numeric"
+        },
+
+        "Decimal" : {
+            "Text" : ".",
+            "Decoration" : "Dark",
+            "Row":"5",
+            "Column" : "2",
+            "ButtonType" : "Decimal"
+        },
+
+        "Equate" : {
+            "Text" : "=",
+            "Decoration" : "Gold",
+            "Row" : "5",
+            "Column" : "3",
+            "ButtonType" : "Equate"
+        }
+    }
+]
