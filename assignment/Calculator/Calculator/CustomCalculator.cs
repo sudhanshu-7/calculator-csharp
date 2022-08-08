@@ -127,6 +127,11 @@ namespace Calculator
 
         public double Evaluate(string expressionString)
         {
+            if(expressionString!="" && expressionString[0] == '-')
+            {
+                expressionString = "0" + expressionString;
+            }
+            expressionString = expressionString.Replace("(-" , "(0-");
             List<Token> tokens = ExpressionConverter.ToPostfix(this, expressionString);
 
             //Postfix Evaluation Logic

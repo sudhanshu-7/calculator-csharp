@@ -61,7 +61,7 @@ namespace CalculatorFrontEnd {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\CalculatorFrontEnd\CalculatorFrontEnd\UiData.json.
+        ///   Looks up a localized string similar to C:\Users\Sudhanshu\source\repos\calculator-csharp\assignment\CalculatorFrontEnd\CalculatorFrontEnd\UiData.json.
         /// </summary>
         internal static string JsonPath {
             get {
