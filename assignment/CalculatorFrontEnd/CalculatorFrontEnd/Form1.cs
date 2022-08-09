@@ -283,7 +283,7 @@ namespace CalculatorFrontEnd
             this.MinimizeBox = false;
             string temp = ToolTip.LabelBox;
             temp = temp.Replace("\n", "\n");
-            Console.WriteLine(temp);
+            //Console.WriteLine(temp);
             this._toolTipButton.SetToolTip(this._resultsLabel, ToolTip.LabelBox);
             this._toolTipButton.SetToolTip(this._calculatorText, ToolTip.InputBox);
             this.Name = "CalculatorForm";
@@ -334,6 +334,7 @@ namespace CalculatorFrontEnd
                         HandleNumericEvents(button);
                         break;
                     case CalculatorButtonType.UnaryOperator:
+                        HandleUnaryOperationEvents(button);
                         break;
                     case CalculatorButtonType.BinaryOperator:
                        HandleBinaryOperationEvents(button);
@@ -394,9 +395,54 @@ namespace CalculatorFrontEnd
             }
             else
             {
-                _currentInput += button.Text;
+       
+                if(Double.Parse(_currentInput) == 0 && _currentInput.Contains(".") == false)
+                {
+                    _currentInput = button.Text;
+                }
+                else _currentInput += button.Text;
             }
 
+        }
+        private void HandleUnaryOperationEvents(UIButton button)
+        {
+            switch (button.Name)
+            {
+                case "Percentage":
+                    if (_calculatorPreviousStatus == CalculatorTextStatus.Equated)
+                    {
+                        break;
+                    }
+                    if (_previousInput != "" && _previousInput != "0")
+                    {
+                        string operand = _previousInput.Remove(_previousInput.Length - 1);
+                        double operandValue = Double.Parse(operand);
+                        operandValue *= Double.Parse(_currentInput);
+                        operandValue /= 100F;
+                        operand = operandValue.ToString();
+                        _previousInput += operand;
+                        _previousInput = _calculator.Evaluate(_previousInput).ToString();
+                        _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
+                        _calculatorPreviousStatus = CalculatorTextStatus.Equated;
+                        _currentInput = operand;
+                        Console.WriteLine(operand);
+                    }
+                    else
+                    {
+                        Console.WriteLine(_calculatorPreviousStatus + " " + _previousInput);
+                    }
+                    break;
+                case "Negate":
+                    if(_currentInput != "")
+                    {
+                        _currentInput = ((Double.Parse(_currentInput)) * -1F).ToString();
+                        _calculatorTextStatus = CalculatorTextStatus.Typing;
+                    }
+
+                    break;
+                default:
+                    break;
+            }
         }
         private void HandleBinaryOperationEvents(UIButton button)
         {
@@ -423,6 +469,11 @@ namespace CalculatorFrontEnd
             }
             else
             {
+                double operand = Double.Parse(_currentInput);
+                if(operand < 0)
+                {
+                    _currentInput = "(" + _currentInput + ")";
+                }
                 if (_previousInput == "")
                 {
                     _previousInput = "0+" + _currentInput;
@@ -506,6 +557,7 @@ namespace CalculatorFrontEnd
             if (_calculatorPreviousStatus == CalculatorTextStatus.Equated) return;
             if (_previousInput == "") _previousInput = "0+";
             if (_currentInput == "") _currentInput = "0";
+            if (Double.Parse(_currentInput) < 0) _currentInput = "(" + _currentInput + ")";
             _previousInput = (_previousInput + _currentInput);
             double answer = _calculator.Evaluate(_previousInput);
             _currentInput = answer.ToString();
