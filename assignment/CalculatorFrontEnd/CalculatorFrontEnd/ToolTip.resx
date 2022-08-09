@@ -117,22 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EmptyStringError" xml:space="preserve">
-    <value>Empty String</value>
+  <data name="EditBox" xml:space="preserve">
+    <value>It provide two options for the user:\n1.Copy\n2.Paste</value>
   </data>
-  <data name="InvalidArgumentError" xml:space="preserve">
-    <value>Arguments are invalid</value>
+  <data name="InputBox" xml:space="preserve">
+    <value>It is used to provide input to the calculator which ultimately serves as an operand</value>
   </data>
-  <data name="InvalidOperatorError" xml:space="preserve">
-    <value>Operator is invalid. It is already in use</value>
-  </data>
-  <data name="InvalidStringError" xml:space="preserve">
-    <value>Invalid String Entered</value>
-  </data>
-  <data name="OperationNotAllowed" xml:space="preserve">
-    <value>This operation is not allowed</value>
-  </data>
-  <data name="PathName" xml:space="preserve">
-    <value>C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\Calculator\Calculator\OperatorDetails.json</value>
+  <data name="LabelBox" xml:space="preserve">
+    <value>It is a helper label used for multiple purpose like\n1.Showing previous results \n 2.Showing Previous Operands in case of a binary operation\n3.Providing better calculator visuals to the user</value>
   </data>
 </root>

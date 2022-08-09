@@ -122,7 +122,7 @@
             // ClearButton
             // 
             ClearButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            ClearButton.BackColor = System.Drawing.Color.Goldenrod;
+            ClearButton.BackColor = System.Drawing.Color.RosyBrown;
             ClearButton.Dock = System.Windows.Forms.DockStyle.Fill;
             ClearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             ClearButton.Location = new System.Drawing.Point(269, 3);
@@ -453,9 +453,10 @@
             // 
             // inputBox
             // 
+            this.inputBox.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.inputBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.inputBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.inputBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inputBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.inputBox.Location = new System.Drawing.Point(3, 3);
             this.inputBox.Name = "inputBox";
             this.inputBox.Size = new System.Drawing.Size(528, 22);
@@ -515,7 +516,7 @@
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label1.ForeColor = System.Drawing.Color.DarkBlue;
             this.label1.Location = new System.Drawing.Point(0, 24);
             this.label1.MaximumSize = new System.Drawing.Size(100, 100);
             this.label1.Name = "label1";

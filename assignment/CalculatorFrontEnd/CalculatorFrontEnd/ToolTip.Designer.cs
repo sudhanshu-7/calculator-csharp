@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Calculator {
+namespace CalculatorFrontEnd {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Calculator {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ResourceExceptions {
+    internal class ToolTip {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ResourceExceptions() {
+        internal ToolTip() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Calculator {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Calculator.ResourceExceptions", typeof(ResourceExceptions).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CalculatorFrontEnd.ToolTip", typeof(ToolTip).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,56 +61,29 @@ namespace Calculator {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Empty String.
+        ///   Looks up a localized string similar to It provide two options for the user:\n1.Copy\n2.Paste.
         /// </summary>
-        internal static string EmptyStringError {
+        internal static string EditBox {
             get {
-                return ResourceManager.GetString("EmptyStringError", resourceCulture);
+                return ResourceManager.GetString("EditBox", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arguments are invalid.
+        ///   Looks up a localized string similar to It is used to provide input to the calculator which ultimately serves as an operand.
         /// </summary>
-        internal static string InvalidArgumentError {
+        internal static string InputBox {
             get {
-                return ResourceManager.GetString("InvalidArgumentError", resourceCulture);
+                return ResourceManager.GetString("InputBox", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operator is invalid. It is already in use.
+        ///   Looks up a localized string similar to It is a helper label used for multiple purpose like\n1.Showing previous results \n 2.Showing Previous Operands in case of a binary operation\n3.Providing better calculator visuals to the user.
         /// </summary>
-        internal static string InvalidOperatorError {
+        internal static string LabelBox {
             get {
-                return ResourceManager.GetString("InvalidOperatorError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid String Entered.
-        /// </summary>
-        internal static string InvalidStringError {
-            get {
-                return ResourceManager.GetString("InvalidStringError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This operation is not allowed.
-        /// </summary>
-        internal static string OperationNotAllowed {
-            get {
-                return ResourceManager.GetString("OperationNotAllowed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to C:\Users\GPCTAdmin\source\repos\sudhanshu-nautiyal\assignment\Calculator\Calculator\OperatorDetails.json.
-        /// </summary>
-        internal static string PathName {
-            get {
-                return ResourceManager.GetString("PathName", resourceCulture);
+                return ResourceManager.GetString("LabelBox", resourceCulture);
             }
         }
     }

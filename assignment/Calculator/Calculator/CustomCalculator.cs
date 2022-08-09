@@ -127,41 +127,46 @@ namespace Calculator
 
         public double Evaluate(string expressionString)
         {
-            if(expressionString!="" && expressionString[0] == '-')
+            if (expressionString != "" && expressionString[0] == '-')
             {
                 expressionString = "0" + expressionString;
             }
-            expressionString = expressionString.Replace("(-" , "(0-");
+            expressionString = expressionString.Replace("(-", "(0-");
             List<Token> tokens = ExpressionConverter.ToPostfix(this, expressionString);
 
             //Postfix Evaluation Logic
             Stack<double> evaluatorStack = new Stack<double>();
-            foreach(Token token in tokens)
+            foreach (Token token in tokens)
             {
-                if(token.TokenCategory == TokenType.Operand)
+                if (token.TokenCategory == TokenType.Operand)
                 {
                     evaluatorStack.Push(((Operand)token).Value);
                 }
                 else
                 {
                     Operation operation = (Operation)token;
-                    if(operation.OperandCount > evaluatorStack.Count)
+                    if (operation.OperandCount > evaluatorStack.Count)
                     {
                         throw new Exception(ResourceExceptions.InvalidArgumentError);
                     }
-                    double [] operands = new double [operation.OperandCount];
-                    for(int operandIndex = operation.OperandCount - 1; operandIndex >= 0; operandIndex--)
+                    double[] operands = new double[operation.OperandCount];
+                    for (int operandIndex = operation.OperandCount - 1; operandIndex >= 0; operandIndex--)
                     {
                         operands[operandIndex] = evaluatorStack.Pop();
                     }
                     evaluatorStack.Push(operation.Evaluate(operands));
                 }
             }
-            if(evaluatorStack.Count > 1)
+            if (evaluatorStack.Count > 1)
             {
                 throw new Exception(ResourceExceptions.InvalidArgumentError);
             }
-            return evaluatorStack.Pop();
+            double answer = evaluatorStack.Pop();
+            if (Double.IsNaN(answer) || Double.IsInfinity(answer))
+            {
+                throw new Exception(ResourceExceptions.OperationNotAllowed);
+            }
+            return answer;
         }
         public void RegisterCustomOperation(string operationSymbol, Operation customOperation)
         {

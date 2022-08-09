@@ -5,14 +5,16 @@
             "Decoration" : "Gold",
             "Row":"4",
             "Column" : "3",
-            "ButtonType" : "BinaryOperator"
+            "ButtonType" : "BinaryOperator",
+            "Comment" : "It is used to add two numbers\nEg. 2 + 3 = 5"
         },
         "Percentage" : {
             "Text" : "%",
             "Decoration" : "Gold",
             "Row":"0",
             "Column" : "0",
-            "ButtonType" : "BinaryOperator"
+            "ButtonType" : "UnaryOperator",
+            "Comment" : "It is used to find percentage of a number\nEg. 2 + 3 % returns\n 3% of 2"
         },
     
         "Clear Entry" : {
@@ -20,7 +22,8 @@
             "Decoration" : "Gold",
             "Row":"0",
             "Column" : "1",
-            "ButtonType" : "ClearEntry"
+            "ButtonType" : "ClearEntry",
+            "Comment" : "It is used to clear the current Input box"
         },
 
         "Clear" : {
@@ -28,7 +31,8 @@
             "Decoration" : "Gold",
             "Row":"0",
             "Column" : "2",
-            "ButtonType" : "ClearAll"
+            "ButtonType" : "ClearAll",
+            "Comment" : "It is used to clear the current input box and previous calculations"
         },
 
         "Backspace" : {
@@ -36,6 +40,7 @@
             "Decoration" : "Gold",
             "Row":"0",
             "Column" : "3",
+            "Comment" : "It is used the clear the last entered digit in the input",
             "ButtonType" : "Backspace"
         },
 
@@ -44,6 +49,7 @@
             "Decoration" : "Gold",
             "Row":"1",
             "Column" : "0",
+            "Comment" : "It will reciprocate the value in the input box",
             "ButtonType" : "UnaryOperator"
         },
 
@@ -52,6 +58,7 @@
             "Decoration" : "Gold",
             "Row":"1",
             "Column" : "1",
+            "Comment" : "It will square the value in the input box",
             "ButtonType" : "UnaryOperator"
         },
 
@@ -60,6 +67,7 @@
             "Decoration" : "Gold",
             "Row":"1",
             "Column" : "2",
+            "Comment" : "It will return the square root of the value in the input box",
             "ButtonType" : "UnaryOperator"
         },
 
@@ -68,6 +76,7 @@
             "Decoration" : "Gold",
             "Row":"1",
             "Column" : "3",
+            "Comment" : "It is used to divide two operands\nEg. 4 / 2 = 2",
             "ButtonType" : "BinaryOperator"
         },
 
@@ -76,6 +85,7 @@
             "Decoration" : "Normal",
             "Row":"2",
             "Column" : "0",
+            "Comment" : "Numeric Value",
             "ButtonType" : "Numeric"
         },
 
@@ -84,6 +94,7 @@
             "Decoration" : "Normal",
             "Row":"2",
             "Column" : "1",
+            "Comment" : "Numeric Value",
             "ButtonType" : "Numeric"
         },
 
@@ -92,6 +103,7 @@
             "Decoration" : "Normal",
             "Row":"2",
             "Column" : "2",
+            "Comment" : "Numeric Value",
             "ButtonType" : "Numeric"
         },
 
@@ -100,6 +112,7 @@
             "Decoration" : "Gold",
             "Row":"2",
             "Column" : "3",
+            "Comment" : "it is used to multiply two operands\nEg. 2*4 = 8",
             "ButtonType" : "BinaryOperator"
         },
 
@@ -108,6 +121,7 @@
             "Decoration" : "Normal",
             "Row":"3",
             "Column" : "0",
+            "Comment" : "Numeric Value",
             "ButtonType" : "Numeric"
         },
 
@@ -116,6 +130,7 @@
             "Decoration" : "Normal",
             "Row":"3",
             "Column" : "1",
+            "Comment" : "Numeric Value",
             "ButtonType" : "Numeric"
         },
 
@@ -124,6 +139,7 @@
             "Decoration" : "Normal",
             "Row":"3",
             "Column" : "2",
+            "Comment" : "Numeric Value",
             "ButtonType" : "Numeric"
         },
 
@@ -132,6 +148,7 @@
             "Decoration" : "Gold",
             "Row":"3",
             "Column" : "3",
+            "Comment" : "It is used to subtract two numbers\nEg. 2 - 3 = -1",
             "ButtonType" : "BinaryOperator"
         },
 
@@ -140,6 +157,7 @@
             "Decoration" : "Normal",
             "Row":"4",
             "Column" : "0",
+            "Comment" : "Numeric Value",
             "ButtonType" : "Numeric"
         },
 
@@ -148,6 +166,7 @@
             "Decoration" : "Normal",
             "Row":"4",
             "Column" : "1",
+            "Comment" : "Numeric Value",
             "ButtonType" : "Numeric"
         },
 
@@ -156,6 +175,7 @@
             "Decoration" : "Normal",
             "Row":"4",
             "Column" : "2",
+            "Comment" : "Numeric Value",
             "ButtonType" : "Numeric"
         },
 
@@ -164,6 +184,7 @@
             "Decoration" : "Dark",
             "Row":"5",
             "Column" : "0",
+            "Comment" : "It will negate the value in the input box\nEx. negate(2) = -2",
             "ButtonType" : "UnaryOperator"
         },
 
@@ -172,6 +193,7 @@
             "Decoration" : "Normal",
             "Row":"5",
             "Column" : "1",
+            "Comment" : "Numeric Value",
             "ButtonType" : "Numeric"
         },
 
@@ -180,6 +202,7 @@
             "Decoration" : "Dark",
             "Row":"5",
             "Column" : "2",
+            "Comment" : "It is used to add floating point to your value\nEx. 2.3",
             "ButtonType" : "Decimal"
         },
 
@@ -188,7 +211,50 @@
             "Decoration" : "Gold",
             "Row" : "5",
             "Column" : "3",
+           "Comment" : "It will evaluate your result",
             "ButtonType" : "Equate"
+        }
+    },
+    {
+        "Memory Save" : {
+            "Decoration" :"Red",
+            "ButtonType" : "Memory",
+            "Text" : "MS", 
+            "Row" : "0",
+            "Column" : "0",
+            "Comment" : "It will save the current value on the input box to the memory for later use"
+        },
+        "Memory Add" : {
+            "Decoration" :"Red",
+            "ButtonType" : "Memory",
+            "Text" : "M+", 
+            "Row" : "0",
+            "Column" : "1",
+            "Comment" : "It will add the current value on the input box with the latest value in the memory\nIf there are no elements in the memory, it will save the input value in the memory"
+        },
+        "Memory Subtract" : {
+            "Decoration" :"Red",
+            "ButtonType" : "Memory",
+            "Text" : "M+", 
+            "Row" : "0",
+            "Column" : "2",
+            "Comment" : "It will subtract the current value on the input box from the latest value in the memory\nIf there are no elements in the memory, it will save the negation of input value in the memory"
+        },
+        "Memory Clear" : {
+            "Decoration" :"Red",
+            "ButtonType" : "Memory",
+            "Text" : "MC", 
+            "Row" : "0",
+            "Column" : "3",
+            "Comment" : "It will clear all the elements stored in the memory"
+        },
+        "Memory Read" : {
+            "Decoration" :"Red",
+            "ButtonType" : "Memory",
+            "Text" : "MR", 
+            "Row" : "0",
+            "Column" : "4",
+            "Comment" : "It will replace the current input box with the element stored latest on the memory"
         }
     }
 ]

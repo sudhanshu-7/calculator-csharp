@@ -51,13 +51,16 @@ namespace CalculatorFrontEnd
         private CalculatorTextStatus _calculatorPreviousStatus;
         private string _currentInput, _previousInput;
         private Calculator.CustomCalculator _calculator;
+        private readonly Newtonsoft.Json.Linq.JArray _jsonDataFromFile;
         private readonly Newtonsoft.Json.Linq.JObject _buttonDetailsJSON;
+        private readonly Newtonsoft.Json.Linq.JObject _memoryButtonsDetailsJSON;
         private System.Windows.Forms.MenuStrip _menuStrip;
         private System.Windows.Forms.ToolStripMenuItem _editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _exitToolStripMenuItem;
+        private System.Windows.Forms.ToolTip _toolTipButton;
         #endregion
         private void PerformButtonPress(char typedCharacter,CalculatorButtonType buttonType)
         {
@@ -65,7 +68,7 @@ namespace CalculatorFrontEnd
             dummyButton.Click += new EventHandler(ClickButtonHandler);
             dummyButton.PerformClick();
         }
-        private Newtonsoft.Json.Linq.JObject GetDetailsFromJson(string pathName)
+        private Newtonsoft.Json.Linq.JArray GetDetailsFromJson(string pathName)
         {
             try
             {
@@ -74,7 +77,7 @@ namespace CalculatorFrontEnd
                     string json = reader.ReadToEnd();
                     dynamic jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
                     var jsonObject = jsonArray[0];
-                    return jsonArray[0];
+                    return jsonArray;
                 }
             }
             catch (Exception ex)
@@ -98,6 +101,19 @@ namespace CalculatorFrontEnd
                     Calculator.ConverterClass.GetEnumFromString<CalculatorButtonType>(jsonObject["ButtonType"].ToString())
                     );
             }
+            index = 0;
+            foreach (System.Collections.Generic.KeyValuePair<string, Newtonsoft.Json.Linq.JToken> element in _memoryButtonsDetailsJSON)
+            {
+                string key = element.Key;
+                var jsonObject = element.Value;
+                _calculatorMemoryButtons[index++] = new UIButton(key,
+                    jsonObject["Text"].ToString(),
+                    Int32.Parse((string)jsonObject["Row"]),
+                    Int32.Parse(jsonObject["Column"].ToString()),
+                    Calculator.ConverterClass.GetEnumFromString<ButtonDecoration>(jsonObject["Decoration"].ToString()),
+                    Calculator.ConverterClass.GetEnumFromString<CalculatorButtonType>(jsonObject["ButtonType"].ToString())
+                    );
+            }
         }
         public Form1()
         {
@@ -113,13 +129,16 @@ namespace CalculatorFrontEnd
             this._calculatorText = new System.Windows.Forms.TextBox();
             this._displayLayout.SuspendLayout();
             this.SuspendLayout();
-            this._buttonDetailsJSON = GetDetailsFromJson(ResourceFile.JsonPath);
+            this._jsonDataFromFile = GetDetailsFromJson(ResourceFile.JsonPath);
+            this._buttonDetailsJSON = (Newtonsoft.Json.Linq.JObject)_jsonDataFromFile[0];
+            this._memoryButtonsDetailsJSON = (Newtonsoft.Json.Linq.JObject)_jsonDataFromFile[1];
             this._menuStrip = new System.Windows.Forms.MenuStrip();
             this._editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem("Edit");
             this._copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem("Copy");
             this._pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem("Paste");
             this._helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem("Help");
             this._exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem("Exit");
+            this._toolTipButton = new System.Windows.Forms.ToolTip();
             _resultsLabel.Text = "";
             _calculatorText.Text = "0";
             if (this._buttonDetailsJSON != null)
@@ -217,14 +236,7 @@ namespace CalculatorFrontEnd
                 _resultsLabel.Text = "";
             };
 
-            //Memory Buttons
-            // Considering that memory operations are fixed
-            _calculatorMemoryButtons[0] = new UIButton("Memory Save", "MS", 0, 0, ButtonDecoration.Red, CalculatorButtonType.Memory);
-            _calculatorMemoryButtons[1] = new UIButton("Memory Add", "M+", 0, 1, ButtonDecoration.Red, CalculatorButtonType.Memory);
-            _calculatorMemoryButtons[2] = new UIButton("Memory Subtract", "M-", 0, 2, ButtonDecoration.Red, CalculatorButtonType.Memory);
-            _calculatorMemoryButtons[3] = new UIButton("Memory Clear" , "MC" , 0 ,3 , ButtonDecoration.Red , CalculatorButtonType.Memory);
-            _calculatorMemoryButtons[4] = new UIButton("Memory Read", "MR", 0, 4, ButtonDecoration.Red, CalculatorButtonType.Memory);
-            
+
             //Memory Layout
             this._memoryButtonsTableLayout.AutoSize = true;
             // this._memoryButtonsTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -245,7 +257,7 @@ namespace CalculatorFrontEnd
             this._calculatorUILayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             _calculatorUILayout.RowStyles.Add(new RowStyle(SizeType.Percent, 5F));
             _calculatorUILayout.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            _calculatorUILayout.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            _calculatorUILayout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             _calculatorUILayout.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
 
             _calculatorUILayout.Controls.Add(this._menuStrip);
@@ -269,8 +281,13 @@ namespace CalculatorFrontEnd
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            string temp = ToolTip.LabelBox;
+            temp = temp.Replace("\n", "\n");
+            Console.WriteLine(temp);
+            this._toolTipButton.SetToolTip(this._resultsLabel, ToolTip.LabelBox);
+            this._toolTipButton.SetToolTip(this._calculatorText, ToolTip.InputBox);
             this.Name = "CalculatorForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Calculator";
             this._calculatorText.KeyPress += new KeyPressEventHandler(KeyPressEventHandler);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -311,72 +328,21 @@ namespace CalculatorFrontEnd
             try
             {
                 UIButton button = (UIButton)sender;
-                double answer;
                 switch (button.Type)
                 {
                     case CalculatorButtonType.Numeric:
-                        if (_calculatorPreviousStatus == CalculatorTextStatus.Equated)
-                        {
-                            _previousInput = "";
-                            _calculatorPreviousStatus = CalculatorTextStatus.Typing;
-                        }
-                        if (_calculatorTextStatus == CalculatorTextStatus.ShowingPreviousResult)
-                        {
-                            _calculatorTextStatus = CalculatorTextStatus.Typing;
-                            _currentInput = button.Text;
-                        }
-                        else
-                        {
-                            _currentInput += button.Text;
-                        }
+                        HandleNumericEvents(button);
                         break;
                     case CalculatorButtonType.UnaryOperator:
-                        
                         break;
                     case CalculatorButtonType.BinaryOperator:
-                        string binaryOperator = button.Text == "÷" ? "/" : button.Text;
-
-                        //Check Whether the last operator is a character or not
-
-                        if (_calculatorTextStatus == CalculatorTextStatus.ShowingPreviousResult)
-                        {
-                            if (_calculatorPreviousStatus == CalculatorTextStatus.Equated)
-                            {
-                                _previousInput += binaryOperator;
-                                _calculatorPreviousStatus = CalculatorTextStatus.Typing;
-                            }
-                            else if (_previousInput == "")
-                            {
-                                _previousInput = "0" + binaryOperator;
-                            }
-                            else
-                            {
-                                _previousInput = _previousInput.Remove(_previousInput.Length - 1, 1) + binaryOperator;
-
-                            }
-                        }
-                        else
-                        {
-                            if (_previousInput == "")
-                            {
-                                _previousInput = "0+" + _currentInput;
-                            }
-                            else
-                            {
-                                _previousInput += _currentInput;
-                            }
-                            answer = _calculator.Evaluate(_previousInput);
-                            _previousInput = answer.ToString() + binaryOperator;
-                            _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
-                            _currentInput = answer.ToString();
-                        }
+                       HandleBinaryOperationEvents(button);
                         break;
                     case CalculatorButtonType.ClearEntry:
                         _currentInput = "0";
                         _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
                         break;
                     case CalculatorButtonType.Backspace:
-                        Console.WriteLine("Inside Backspace with " + _calculatorTextStatus);
                         if (_calculatorTextStatus == CalculatorTextStatus.Typing && _currentInput.Length > 0)
                         {
                             _currentInput = _currentInput.Remove(_currentInput.Length - 1, 1);
@@ -388,29 +354,10 @@ namespace CalculatorFrontEnd
                         _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
                         break;
                     case CalculatorButtonType.Decimal:
-                        if (_calculatorTextStatus == CalculatorTextStatus.ShowingPreviousResult)
-                        {
-                            _calculatorTextStatus = CalculatorTextStatus.Typing;
-                            _currentInput = "0.";
-                        }
-                        else
-                        {
-                            if (_currentInput.Contains(".") == false)
-                            {
-                                _currentInput += ".";
-                            }
-                        }
+                        HandleDecimalEvents(button);
                         break;
                     case CalculatorButtonType.Equate:
-                        if (_calculatorPreviousStatus == CalculatorTextStatus.Equated) break;
-                        if (_previousInput == "") _previousInput = "0+";
-                        if (_currentInput == "") _currentInput = "0";
-                        _previousInput = (_previousInput + _currentInput);
-                        answer = _calculator.Evaluate(_previousInput);
-                        _currentInput = answer.ToString();
-                        _previousInput = _currentInput;
-                        _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
-                        _calculatorPreviousStatus = CalculatorTextStatus.Equated;
+                        HandleEquateEvent(button);
                         break;
                     case CalculatorButtonType.Memory:
                         HandleMemoryEvents(button);
@@ -422,7 +369,7 @@ namespace CalculatorFrontEnd
             {
                 Console.WriteLine(ex.Message);
                 _previousInput = "";
-                _currentInput = "Invalid String Entered";
+                _currentInput = ex.Message;
                 _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
             }
 
@@ -432,6 +379,79 @@ namespace CalculatorFrontEnd
             _calculatorText.SelectionStart = _calculatorText.Text.Length;
             _resultsLabel.Text = _previousInput;
 
+        }
+        private void HandleNumericEvents(UIButton button)
+        {
+            if (_calculatorPreviousStatus == CalculatorTextStatus.Equated)
+            {
+                _previousInput = "";
+                _calculatorPreviousStatus = CalculatorTextStatus.Typing;
+            }
+            if (_calculatorTextStatus == CalculatorTextStatus.ShowingPreviousResult)
+            {
+                _calculatorTextStatus = CalculatorTextStatus.Typing;
+                _currentInput = button.Text;
+            }
+            else
+            {
+                _currentInput += button.Text;
+            }
+
+        }
+        private void HandleBinaryOperationEvents(UIButton button)
+        {
+            string binaryOperator = button.Text == "÷" ? "/" : button.Text;
+
+            //Check Whether the last operator is a character or not
+
+            if (_calculatorTextStatus == CalculatorTextStatus.ShowingPreviousResult)
+            {
+                if (_calculatorPreviousStatus == CalculatorTextStatus.Equated)
+                {
+                    _previousInput += binaryOperator;
+                    _calculatorPreviousStatus = CalculatorTextStatus.Typing;
+                }
+                else if (_previousInput == "")
+                {
+                    _previousInput = "0" + binaryOperator;
+                }
+                else
+                {
+                    _previousInput = _previousInput.Remove(_previousInput.Length - 1, 1) + binaryOperator;
+
+                }
+            }
+            else
+            {
+                if (_previousInput == "")
+                {
+                    _previousInput = "0+" + _currentInput;
+                }
+                else
+                {
+                    _previousInput += _currentInput;
+                }
+                double answer = _calculator.Evaluate(_previousInput);
+
+                _previousInput = answer.ToString() + binaryOperator;
+                _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
+                _currentInput = answer.ToString();
+            }
+        }
+        private void HandleDecimalEvents(UIButton button)
+        {
+            if (_calculatorTextStatus == CalculatorTextStatus.ShowingPreviousResult)
+            {
+                _calculatorTextStatus = CalculatorTextStatus.Typing;
+                _currentInput = "0.";
+            }
+            else
+            {
+                if (_currentInput.Contains(".") == false)
+                {
+                    _currentInput += ".";
+                }
+            }
         }
         private void HandleMemoryEvents(UIButton buttonObject)
         {
@@ -481,6 +501,18 @@ namespace CalculatorFrontEnd
                     break;
             }
         }
+        private void HandleEquateEvent(UIButton button)
+        {
+            if (_calculatorPreviousStatus == CalculatorTextStatus.Equated) return;
+            if (_previousInput == "") _previousInput = "0+";
+            if (_currentInput == "") _currentInput = "0";
+            _previousInput = (_previousInput + _currentInput);
+            double answer = _calculator.Evaluate(_previousInput);
+            _currentInput = answer.ToString();
+            _previousInput = _currentInput;
+            _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
+            _calculatorPreviousStatus = CalculatorTextStatus.Equated;
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             _displayLayout.Controls.Add(_resultsLabel,0,0);
@@ -488,11 +520,19 @@ namespace CalculatorFrontEnd
             for (int index = 0; index < _calculatorButtons.Length; index++)
             {
                 _calculatorButtons[index].Click += new EventHandler(ClickButtonHandler);
+                try
+                {
+                    this._toolTipButton.SetToolTip(_calculatorButtons[index],_buttonDetailsJSON[_calculatorButtons[index].Name]["Comment"].ToString());
+                }catch (Exception)
+                {
+
+                }
                 this._buttonsTableLayout.Controls.Add(_calculatorButtons[index], _calculatorButtons[index].Column, _calculatorButtons[index].Row);
             }
             for (int index = 0; index < _calculatorMemoryButtons.Length; index++)
             {
                 _calculatorMemoryButtons[index].Click += new EventHandler(ClickButtonHandler);
+                _toolTipButton.SetToolTip(_calculatorMemoryButtons[index], _memoryButtonsDetailsJSON[_calculatorMemoryButtons[index].Name]["Comment"].ToString());
                 this._memoryButtonsTableLayout.Controls.Add(_calculatorMemoryButtons[index], _calculatorMemoryButtons[index].Column, _calculatorMemoryButtons[index].Row);
             }
             this.ActiveControl = this._calculatorText;

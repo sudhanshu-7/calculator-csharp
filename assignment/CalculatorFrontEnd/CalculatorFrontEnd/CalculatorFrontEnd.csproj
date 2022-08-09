@@ -59,6 +59,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ToolTip.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ToolTip.resx</DependentUpon>
+    </Compile>
     <Compile Include="UIButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -84,6 +89,10 @@
     <EmbeddedResource Include="ResourceFile.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourceFile.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToolTip.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ToolTip.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
