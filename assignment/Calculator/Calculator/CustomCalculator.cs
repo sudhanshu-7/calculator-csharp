@@ -34,7 +34,7 @@ namespace Calculator
 
         public double MemoryRecall()
         {
-            return _memory.Peek();
+            return _memory.Count>0? _memory.Peek() : 0;
         }
 
         public void MemoryModification(double value)

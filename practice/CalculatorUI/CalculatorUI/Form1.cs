@@ -71,5 +71,10 @@ namespace CalculatorUI
         {
             Console.WriteLine("Inside Mouse Click");
         }
+
+        private void inputBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -15,7 +15,8 @@ namespace CalculatorFrontEnd
     {
         Gold,
         Dark,
-        Normal
+        Normal,
+        Red
     }
     enum CalculatorTextStatus
     {
@@ -32,14 +33,19 @@ namespace CalculatorFrontEnd
         ClearAll,
         Backspace,
         Equate,
-        Decimal
+        Decimal,
+        Memory
     }
     public partial class Form1 : Form
     {
+        #region Members
+        private TableLayoutPanel _calculatorUILayout;
         private System.Windows.Forms.TableLayoutPanel _buttonsTableLayout;
+        private System.Windows.Forms.TableLayoutPanel _memoryButtonsTableLayout;
         private System.Windows.Forms.TableLayoutPanel _displayLayout;
         private System.Windows.Forms.Label _resultsLabel;
         private UIButton[] _calculatorButtons;
+        private UIButton[] _calculatorMemoryButtons;
         private System.Windows.Forms.TextBox _calculatorText;
         private CalculatorTextStatus _calculatorTextStatus;
         private CalculatorTextStatus _calculatorPreviousStatus;
@@ -52,6 +58,7 @@ namespace CalculatorFrontEnd
         private System.Windows.Forms.ToolStripMenuItem _pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _exitToolStripMenuItem;
+        #endregion
         private void PerformButtonPress(char typedCharacter,CalculatorButtonType buttonType)
         {
             UIButton dummyButton = new UIButton("Dummy", typedCharacter.ToString(), -1, -1, ButtonDecoration.Gold, buttonType);
@@ -96,9 +103,12 @@ namespace CalculatorFrontEnd
         {
 
             //Initialization
+            this._calculatorUILayout = new TableLayoutPanel();
             this._calculatorButtons = new UIButton[24];
+            this._calculatorMemoryButtons = new UIButton[5];
             this._buttonsTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this._displayLayout = new System.Windows.Forms.TableLayoutPanel();
+            this._memoryButtonsTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this._resultsLabel = new System.Windows.Forms.Label();
             this._calculatorText = new System.Windows.Forms.TextBox();
             this._displayLayout.SuspendLayout();
@@ -124,21 +134,28 @@ namespace CalculatorFrontEnd
             //calculator Text box
             this._calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
             this._calculatorPreviousStatus = CalculatorTextStatus.Equated;
-            this._calculatorText.BorderStyle = BorderStyle.None;
+            this._calculatorText.BorderStyle = BorderStyle.Fixed3D;
             this._calculatorText.Dock = DockStyle.Fill;
-            this._calculatorText.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._calculatorText.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._calculatorText.TextAlign = HorizontalAlignment.Right;
 
             //result label
-            this._resultsLabel.AutoSize = false;
-            this._resultsLabel.BorderStyle = BorderStyle.None;
+            //this._resultsLabel.AutoSize = false;
+            //this._resultsLabel.BorderStyle = BorderStyle.None;
             this._resultsLabel.Dock = DockStyle.Fill;
-            this._resultsLabel.Font = this._calculatorText.Font;
+            //this._resultsLabel.Font = this._calculatorText.Font;
+            this._resultsLabel.AutoSize = true;
+            this._resultsLabel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this._resultsLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            // this._resultsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._resultsLabel.Margin = new Padding(0,10,0,0);
+            this._resultsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._resultsLabel.ForeColor = System.Drawing.Color.DarkBlue;
             this._resultsLabel.TextAlign = ContentAlignment.MiddleRight;
 
             //button layout
             this._buttonsTableLayout.Size = new System.Drawing.Size(534, 322);
-            this._buttonsTableLayout.Dock = System.Windows.Forms.DockStyle.Bottom;
+            // this._buttonsTableLayout.Dock = System.Windows.Forms.DockStyle.Bottom;
             this._buttonsTableLayout.Location = new System.Drawing.Point(0, 166);
             this._buttonsTableLayout.RowCount = 6;
             this._buttonsTableLayout.ColumnCount = 4;
@@ -170,7 +187,7 @@ namespace CalculatorFrontEnd
                 this._helpToolStripMenuItem,
                 this._exitToolStripMenuItem
             });
-            this._menuStrip.Dock = DockStyle.None;
+            // this._menuStrip.Dock = DockStyle.Top;
             //EditToolStrip MenuItem
             this._editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[]
             {
@@ -200,14 +217,55 @@ namespace CalculatorFrontEnd
                 _resultsLabel.Text = "";
             };
 
+            //Memory Buttons
+            // Considering that memory operations are fixed
+            _calculatorMemoryButtons[0] = new UIButton("Memory Save", "MS", 0, 0, ButtonDecoration.Red, CalculatorButtonType.Memory);
+            _calculatorMemoryButtons[1] = new UIButton("Memory Add", "M+", 0, 1, ButtonDecoration.Red, CalculatorButtonType.Memory);
+            _calculatorMemoryButtons[2] = new UIButton("Memory Subtract", "M-", 0, 2, ButtonDecoration.Red, CalculatorButtonType.Memory);
+            _calculatorMemoryButtons[3] = new UIButton("Memory Clear" , "MC" , 0 ,3 , ButtonDecoration.Red , CalculatorButtonType.Memory);
+            _calculatorMemoryButtons[4] = new UIButton("Memory Read", "MR", 0, 4, ButtonDecoration.Red, CalculatorButtonType.Memory);
+            
+            //Memory Layout
+            this._memoryButtonsTableLayout.AutoSize = true;
+            // this._memoryButtonsTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._memoryButtonsTableLayout.ColumnCount = 5;
+            this._memoryButtonsTableLayout.RowCount = 1;
+            for (int columns = 0; columns < _memoryButtonsTableLayout.ColumnCount; columns++)
+            {
+                this._memoryButtonsTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            }
+            this._memoryButtonsTableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 90F));
+
+            //UI Layout Component
+
+            this._calculatorUILayout.AutoSize = true;
+            this._calculatorUILayout.RowCount = 4;
+            this._calculatorUILayout.ColumnCount = 1;
+            this._calculatorUILayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._calculatorUILayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            _calculatorUILayout.RowStyles.Add(new RowStyle(SizeType.Percent, 5F));
+            _calculatorUILayout.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            _calculatorUILayout.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            _calculatorUILayout.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
+
+            _calculatorUILayout.Controls.Add(this._menuStrip);
+            _calculatorUILayout.Controls.Add(this._displayLayout);
+            _calculatorUILayout.Controls.Add(this._memoryButtonsTableLayout);
+            _calculatorUILayout.Controls.Add(this._buttonsTableLayout);
+            for(int index = 0; index < _calculatorUILayout.RowCount; index++)
+            {
+                _calculatorUILayout.Controls[index].Dock = System.Windows.Forms.DockStyle.Fill;
+            }
 
             //Form Component
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 450);
-            this.Controls.Add(this._menuStrip);
-            this.Controls.Add(this._displayLayout);
-            this.Controls.Add(this._buttonsTableLayout);
+            this.ClientSize = new System.Drawing.Size(450, 450);
+            //this.Controls.Add(this._menuStrip);
+            //this.Controls.Add(this._displayLayout);
+            //this.Controls.Add(this._memoryButtonsTableLayout);
+            //this.Controls.Add(this._buttonsTableLayout);
+            this.Controls.Add(this._calculatorUILayout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -217,6 +275,7 @@ namespace CalculatorFrontEnd
             this._calculatorText.KeyPress += new KeyPressEventHandler(KeyPressEventHandler);
             this.Load += new System.EventHandler(this.Form1_Load);
             this._displayLayout.ResumeLayout(false);
+            this._memoryButtonsTableLayout.ResumeLayout(false);
             this._buttonsTableLayout.ResumeLayout(false);
             this.ResumeLayout(false);
         }
@@ -252,7 +311,6 @@ namespace CalculatorFrontEnd
             try
             {
                 UIButton button = (UIButton)sender;
-                Console.WriteLine(button.Text);
                 double answer;
                 switch (button.Type)
                 {
@@ -271,9 +329,9 @@ namespace CalculatorFrontEnd
                         {
                             _currentInput += button.Text;
                         }
-                        Console.WriteLine("Inside Case Numeric : " + _currentInput);
                         break;
                     case CalculatorButtonType.UnaryOperator:
+                        
                         break;
                     case CalculatorButtonType.BinaryOperator:
                         string binaryOperator = button.Text == "÷" ? "/" : button.Text;
@@ -344,6 +402,7 @@ namespace CalculatorFrontEnd
                         }
                         break;
                     case CalculatorButtonType.Equate:
+                        if (_calculatorPreviousStatus == CalculatorTextStatus.Equated) break;
                         if (_previousInput == "") _previousInput = "0+";
                         if (_currentInput == "") _currentInput = "0";
                         _previousInput = (_previousInput + _currentInput);
@@ -352,6 +411,9 @@ namespace CalculatorFrontEnd
                         _previousInput = _currentInput;
                         _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
                         _calculatorPreviousStatus = CalculatorTextStatus.Equated;
+                        break;
+                    case CalculatorButtonType.Memory:
+                        HandleMemoryEvents(button);
                         break;
                     default:
                         break;
@@ -363,12 +425,61 @@ namespace CalculatorFrontEnd
                 _currentInput = "Invalid String Entered";
                 _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
             }
+
             _calculatorText.Focus();
             _calculatorText.Clear();
             _calculatorText.Text = _currentInput;
             _calculatorText.SelectionStart = _calculatorText.Text.Length;
             _resultsLabel.Text = _previousInput;
 
+        }
+        private void HandleMemoryEvents(UIButton buttonObject)
+        {
+            string name = buttonObject.Name;
+            switch (name)
+            {
+                case "Memory Read":
+                    _currentInput = _calculator.MemoryRecall().ToString();
+                    break;
+                case "Memory Save":
+                    if(_calculatorPreviousStatus == CalculatorTextStatus.Equated)
+                    {
+                        _previousInput = "";
+                    }
+                    _calculator.MemorySave(Double.Parse(_currentInput));
+                    break;
+                case "Memory Add":
+                    if (_calculatorPreviousStatus == CalculatorTextStatus.Equated)
+                    {
+                        _previousInput = "";
+                    }
+                    _calculatorPreviousStatus = CalculatorTextStatus.ShowingPreviousResult;
+                    if (_currentInput == "")
+                    {
+                        _currentInput = "0";
+                    }
+                    _calculator.MemoryModification(Double.Parse(_currentInput));
+                    break;
+                case "Memory Subtract":
+                    if (_calculatorPreviousStatus == CalculatorTextStatus.Equated)
+                    {
+                        _previousInput = "";
+                    }
+                    _calculatorPreviousStatus = CalculatorTextStatus.ShowingPreviousResult;
+                    if (_currentInput == "")
+                    {
+                        _currentInput = "0";
+                    }
+                    _calculator.MemoryModification(-1 * Double.Parse(_currentInput));
+                    break;
+                case "Memory Clear":
+                    _calculator.MemoryClear();
+                    break;
+                default:
+                  _currentInput = "";
+                  _previousInput = "";
+                    break;
+            }
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -378,6 +489,11 @@ namespace CalculatorFrontEnd
             {
                 _calculatorButtons[index].Click += new EventHandler(ClickButtonHandler);
                 this._buttonsTableLayout.Controls.Add(_calculatorButtons[index], _calculatorButtons[index].Column, _calculatorButtons[index].Row);
+            }
+            for (int index = 0; index < _calculatorMemoryButtons.Length; index++)
+            {
+                _calculatorMemoryButtons[index].Click += new EventHandler(ClickButtonHandler);
+                this._memoryButtonsTableLayout.Controls.Add(_calculatorMemoryButtons[index], _calculatorMemoryButtons[index].Column, _calculatorMemoryButtons[index].Row);
             }
             this.ActiveControl = this._calculatorText;
             this._calculatorText.SelectionStart = _calculatorText.Text.Length;

@@ -61,6 +61,7 @@
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
             PercentageButton = new System.Windows.Forms.Button();
             ClearEntryButton = new System.Windows.Forms.Button();
             ClearButton = new System.Windows.Forms.Button();
@@ -102,9 +103,7 @@
             PercentageButton.TabIndex = 1;
             PercentageButton.Text = "%";
             PercentageButton.UseVisualStyleBackColor = false;
-            PercentageButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MouseClickEvent);
             PercentageButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NormalClick);
-
             // 
             // ClearEntryButton
             // 
@@ -462,6 +461,7 @@
             this.inputBox.Size = new System.Drawing.Size(528, 22);
             this.inputBox.TabIndex = 0;
             this.inputBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.inputBox.TextChanged += new System.EventHandler(this.inputBox_TextChanged);
             // 
             // menuStrip1
             // 
@@ -508,11 +508,27 @@
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label1.Location = new System.Drawing.Point(0, 24);
+            this.label1.MaximumSize = new System.Drawing.Size(100, 100);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(90, 42);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "this is my label text";
+            // 
             // Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(534, 488);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
@@ -526,7 +542,6 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Calculator";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.Calculator_Shown);
             this.Click += new System.EventHandler(this.FocusOnTextBox);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -550,6 +565,7 @@
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
     }
 }
 

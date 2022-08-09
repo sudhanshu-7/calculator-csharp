@@ -19,23 +19,28 @@ namespace CalculatorFrontEnd
             this.Name = name;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Type = buttonType;
-            this.Dock = DockStyle.Fill;
-            if(buttonDecoration == ButtonDecoration.Normal)
-            {
-                this.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                this.UseVisualStyleBackColor = true;
-            }else if (buttonDecoration == ButtonDecoration.Dark)
-            {
+            this.Dock = DockStyle.Fill; 
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
-                this.BackColor = System.Drawing.SystemColors.ScrollBar;
-                this.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                this.UseVisualStyleBackColor = false;
-            }
-            else
+            switch (buttonDecoration)
             {
-                this.BackColor = System.Drawing.Color.Goldenrod;
-                this.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                this.UseVisualStyleBackColor = false;
+                case ButtonDecoration.Normal:
+                    this.UseVisualStyleBackColor = true;
+                    break;
+                case ButtonDecoration.Dark:
+                    this.BackColor = System.Drawing.SystemColors.ScrollBar;
+                    this.UseVisualStyleBackColor = false;
+                    break;
+                case ButtonDecoration.Gold:
+                    this.BackColor = System.Drawing.Color.Goldenrod;
+                    this.UseVisualStyleBackColor = false;
+                    break;
+                case ButtonDecoration.Red:
+                    this.BackColor = System.Drawing.Color.IndianRed;
+                    this.UseVisualStyleBackColor = false;
+                    break;
+                default:
+                    break;
             }
         }
 
