@@ -102,6 +102,9 @@
             PercentageButton.TabIndex = 1;
             PercentageButton.Text = "%";
             PercentageButton.UseVisualStyleBackColor = false;
+            PercentageButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MouseClickEvent);
+            PercentageButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NormalClick);
+
             // 
             // ClearEntryButton
             // 
@@ -317,6 +320,7 @@
             NumpadButton2.TabIndex = 18;
             NumpadButton2.Text = "2";
             NumpadButton2.UseVisualStyleBackColor = true;
+            NumpadButton2.Click += new System.EventHandler(this.NumpadButton2_Click);
             // 
             // NumpadButton3
             // 

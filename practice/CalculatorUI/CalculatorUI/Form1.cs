@@ -58,5 +58,18 @@ namespace CalculatorUI
             inputBox.Text += ((Button)sender).Text;
             inputBox.Select(inputBox.Text.Length, 0);
         }
+
+        private void NumpadButton2_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void NormalClick(object sender , EventArgs e)
+        {
+            Console.WriteLine("Inside Normal Click");
+        }
+        private void MouseClickEvent(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("Inside Mouse Click");
+        }
     }
 }

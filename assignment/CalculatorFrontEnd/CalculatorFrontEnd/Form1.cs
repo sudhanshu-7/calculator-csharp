@@ -20,7 +20,8 @@ namespace CalculatorFrontEnd
     enum CalculatorTextStatus
     {
         ShowingPreviousResult,
-        Typing
+        Typing,
+        Equated
     }
     enum CalculatorButtonType
     {
@@ -41,6 +42,7 @@ namespace CalculatorFrontEnd
         private UIButton[] _calculatorButtons;
         private System.Windows.Forms.TextBox _calculatorText;
         private CalculatorTextStatus _calculatorTextStatus;
+        private CalculatorTextStatus _calculatorPreviousStatus;
         private string _currentInput, _previousInput;
         private Calculator.CustomCalculator _calculator;
         private readonly Newtonsoft.Json.Linq.JObject _buttonDetailsJSON;
@@ -50,6 +52,12 @@ namespace CalculatorFrontEnd
         private System.Windows.Forms.ToolStripMenuItem _pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _exitToolStripMenuItem;
+        private void PerformButtonPress(char typedCharacter,CalculatorButtonType buttonType)
+        {
+            UIButton dummyButton = new UIButton("Dummy", typedCharacter.ToString(), -1, -1, ButtonDecoration.Gold, buttonType);
+            dummyButton.Click += new EventHandler(ClickButtonHandler);
+            dummyButton.PerformClick();
+        }
         private Newtonsoft.Json.Linq.JObject GetDetailsFromJson(string pathName)
         {
             try
@@ -71,7 +79,7 @@ namespace CalculatorFrontEnd
         private void InitializeButtonArray()
         {
             int index = 0;
-            foreach(System.Collections.Generic.KeyValuePair<string, Newtonsoft.Json.Linq.JToken> element in _buttonDetailsJSON)
+            foreach (System.Collections.Generic.KeyValuePair<string, Newtonsoft.Json.Linq.JToken> element in _buttonDetailsJSON)
             {
                 string key = element.Key;
                 var jsonObject = element.Value;
@@ -104,7 +112,7 @@ namespace CalculatorFrontEnd
             this._exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem("Exit");
             _resultsLabel.Text = "";
             _calculatorText.Text = "0";
-            if(this._buttonDetailsJSON != null)
+            if (this._buttonDetailsJSON != null)
             {
                 InitializeButtonArray();
             }
@@ -115,6 +123,7 @@ namespace CalculatorFrontEnd
 
             //calculator Text box
             this._calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
+            this._calculatorPreviousStatus = CalculatorTextStatus.Equated;
             this._calculatorText.BorderStyle = BorderStyle.None;
             this._calculatorText.Dock = DockStyle.Fill;
             this._calculatorText.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -141,17 +150,13 @@ namespace CalculatorFrontEnd
             {
                 this._buttonsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
             }
+
+
             //Display Layout
             this._displayLayout.AutoSize = true;
             this._displayLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this._displayLayout.RowCount = 2;
             this._displayLayout.ColumnCount = 1;
-            this._displayLayout.Margin = new System.Windows.Forms.Padding(4, 20, 4, 4);
-
-
-            //Button Layout
-
-
 
             this._displayLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             for (int row = 0; row < this._displayLayout.RowCount; ++row)
@@ -173,14 +178,30 @@ namespace CalculatorFrontEnd
                 this._pasteToolStripMenuItem
             });
 
+            //adding close functionality
             this._exitToolStripMenuItem.Click += (object sender, EventArgs e) =>
             {
                 this.Close();
             };
+            //adding Copy functionality
+            this._copyToolStripMenuItem.Click += (object sender, EventArgs e) =>
+            {
+
+                Clipboard.SetText(this._calculatorText.Text);
+            };
+
+            //adding paste functionality
+            this._pasteToolStripMenuItem.Click += (object sender, EventArgs e) => { 
+                _currentInput = Clipboard.GetText();
+                _calculatorTextStatus = CalculatorTextStatus.Typing;
+                _calculatorText.Text = _currentInput;
+            _calculatorText.SelectionStart = _calculatorText.Text.Length;
+                _previousInput = "";
+                _resultsLabel.Text = "";
+            };
 
 
             //Form Component
-
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 450);
@@ -193,100 +214,157 @@ namespace CalculatorFrontEnd
             this.Name = "CalculatorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Calculator";
+            this._calculatorText.KeyPress += new KeyPressEventHandler(KeyPressEventHandler);
             this.Load += new System.EventHandler(this.Form1_Load);
             this._displayLayout.ResumeLayout(false);
             this._buttonsTableLayout.ResumeLayout(false);
             this.ResumeLayout(false);
         }
+        private void KeyPressEventHandler(object sender, KeyPressEventArgs e)
+        {
+            char typedCharacter = e.KeyChar;
+            if (typedCharacter == '÷') typedCharacter = '/';
+            CalculatorButtonType buttonType = CalculatorButtonType.Numeric;
+            if (Char.IsNumber(typedCharacter)) buttonType = CalculatorButtonType.Numeric;
+            else if (ResourceFile.AvailableOperators.Contains(typedCharacter)) buttonType = CalculatorButtonType.BinaryOperator;
+            else if (typedCharacter == '\b')
+            {
+                buttonType = CalculatorButtonType.Backspace;
+            }else if(typedCharacter == '.')
+            {
+                buttonType = CalculatorButtonType.Decimal;
+            }
+            else if (Char.IsNumber(typedCharacter))
+            {
+                PerformButtonPress(typedCharacter, CalculatorButtonType.Numeric);
+            }
+            else if (typedCharacter == '=' || typedCharacter == (char)13) buttonType = CalculatorButtonType.Equate;
+            else
+            {
+                e.Handled = true;
+                return;
+            }
+            PerformButtonPress(typedCharacter , buttonType);
+            e.Handled = true;
+        }
         private void ClickButtonHandler (object sender , EventArgs e)
         {
-            UIButton button = (UIButton)sender;
-            double answer;
-            switch (button.Type)
+            try
             {
-                case CalculatorButtonType.Numeric:
-                    if (_calculatorTextStatus == CalculatorTextStatus.ShowingPreviousResult)
-                    {
-                        _calculatorTextStatus = CalculatorTextStatus.Typing;
-                        _currentInput = button.Text;
-                    }
-                    else
-                    {
-                        _currentInput += button.Text;
-                    }
-                    break;
-                case CalculatorButtonType.UnaryOperator:
-                    break;
-                case CalculatorButtonType.BinaryOperator:
-                    string binaryOperator = button.Text == "÷" ? "/" : button.Text;
-
-                    //Check Whether the last operator is a character or not
-                    if (_calculatorTextStatus == CalculatorTextStatus.ShowingPreviousResult)
-                    {
-                        if(_previousInput == "")
+                UIButton button = (UIButton)sender;
+                Console.WriteLine(button.Text);
+                double answer;
+                switch (button.Type)
+                {
+                    case CalculatorButtonType.Numeric:
+                        if (_calculatorPreviousStatus == CalculatorTextStatus.Equated)
                         {
-                            _previousInput = "0" + binaryOperator;
+                            _previousInput = "";
+                            _calculatorPreviousStatus = CalculatorTextStatus.Typing;
+                        }
+                        if (_calculatorTextStatus == CalculatorTextStatus.ShowingPreviousResult)
+                        {
+                            _calculatorTextStatus = CalculatorTextStatus.Typing;
+                            _currentInput = button.Text;
                         }
                         else
                         {
-                            _previousInput = _previousInput.Remove(_previousInput.Length - 1,1) + binaryOperator;
-
+                            _currentInput += button.Text;
                         }
-                    }
-                    else
-                    {
-                        if(_previousInput == "")
+                        Console.WriteLine("Inside Case Numeric : " + _currentInput);
+                        break;
+                    case CalculatorButtonType.UnaryOperator:
+                        break;
+                    case CalculatorButtonType.BinaryOperator:
+                        string binaryOperator = button.Text == "÷" ? "/" : button.Text;
+
+                        //Check Whether the last operator is a character or not
+
+                        if (_calculatorTextStatus == CalculatorTextStatus.ShowingPreviousResult)
                         {
-                            _previousInput = "0+"+_currentInput;
+                            if (_calculatorPreviousStatus == CalculatorTextStatus.Equated)
+                            {
+                                _previousInput += binaryOperator;
+                                _calculatorPreviousStatus = CalculatorTextStatus.Typing;
+                            }
+                            else if (_previousInput == "")
+                            {
+                                _previousInput = "0" + binaryOperator;
+                            }
+                            else
+                            {
+                                _previousInput = _previousInput.Remove(_previousInput.Length - 1, 1) + binaryOperator;
+
+                            }
                         }
                         else
                         {
-                            _previousInput += _currentInput;
+                            if (_previousInput == "")
+                            {
+                                _previousInput = "0+" + _currentInput;
+                            }
+                            else
+                            {
+                                _previousInput += _currentInput;
+                            }
+                            answer = _calculator.Evaluate(_previousInput);
+                            _previousInput = answer.ToString() + binaryOperator;
+                            _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
+                            _currentInput = answer.ToString();
                         }
-                        answer = _calculator.Evaluate(_previousInput);
-                        _previousInput = answer.ToString() + binaryOperator ;
+                        break;
+                    case CalculatorButtonType.ClearEntry:
+                        _currentInput = "0";
                         _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
-                        _currentInput = answer.ToString();
-                    }
-                    break;
-                case CalculatorButtonType.ClearEntry:
-                    _currentInput = "0";
-                    _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
-                    break;
-                case CalculatorButtonType.Backspace:
-                    break;
-                case CalculatorButtonType.ClearAll:
-                    _currentInput = "0";
-                    _previousInput = "";
-                    _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
-                    break;
-                case CalculatorButtonType.Decimal:
-                    if(_calculatorTextStatus == CalculatorTextStatus.ShowingPreviousResult)
-                    {
-                        _calculatorTextStatus = CalculatorTextStatus.Typing;
-                        _currentInput = "0.";
-                    }
-                    else
-                    {
-                        if(_currentInput.Contains(".") == false)
+                        break;
+                    case CalculatorButtonType.Backspace:
+                        Console.WriteLine("Inside Backspace with " + _calculatorTextStatus);
+                        if (_calculatorTextStatus == CalculatorTextStatus.Typing && _currentInput.Length > 0)
                         {
-                            _currentInput += ".";
+                            _currentInput = _currentInput.Remove(_currentInput.Length - 1, 1);
                         }
-                    }
-                    break;
-                case CalculatorButtonType.Equate:
-                    if (_previousInput == "") _previousInput = "0+";
-                    if (_currentInput == "") _currentInput = "0";
-                    _previousInput = (_previousInput + _currentInput);
-                     answer = _calculator.Evaluate(_previousInput);
-                    _currentInput = answer.ToString();
-                    _previousInput = _currentInput;
-                    _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
-                    break;
-                default:
-                    break;
+                        break;
+                    case CalculatorButtonType.ClearAll:
+                        _currentInput = "0";
+                        _previousInput = "";
+                        _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
+                        break;
+                    case CalculatorButtonType.Decimal:
+                        if (_calculatorTextStatus == CalculatorTextStatus.ShowingPreviousResult)
+                        {
+                            _calculatorTextStatus = CalculatorTextStatus.Typing;
+                            _currentInput = "0.";
+                        }
+                        else
+                        {
+                            if (_currentInput.Contains(".") == false)
+                            {
+                                _currentInput += ".";
+                            }
+                        }
+                        break;
+                    case CalculatorButtonType.Equate:
+                        if (_previousInput == "") _previousInput = "0+";
+                        if (_currentInput == "") _currentInput = "0";
+                        _previousInput = (_previousInput + _currentInput);
+                        answer = _calculator.Evaluate(_previousInput);
+                        _currentInput = answer.ToString();
+                        _previousInput = _currentInput;
+                        _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
+                        _calculatorPreviousStatus = CalculatorTextStatus.Equated;
+                        break;
+                    default:
+                        break;
+                }
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                _previousInput = "";
+                _currentInput = "Invalid String Entered";
+                _calculatorTextStatus = CalculatorTextStatus.ShowingPreviousResult;
             }
             _calculatorText.Focus();
+            _calculatorText.Clear();
             _calculatorText.Text = _currentInput;
             _calculatorText.SelectionStart = _calculatorText.Text.Length;
             _resultsLabel.Text = _previousInput;
@@ -294,8 +372,6 @@ namespace CalculatorFrontEnd
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            Console.WriteLine("We Have : {0} elements in Buttons",_calculatorButtons.Length);
-            this.ActiveControl = this._displayLayout;
             _displayLayout.Controls.Add(_resultsLabel,0,0);
             _displayLayout.Controls.Add(_calculatorText,0,1);
             for (int index = 0; index < _calculatorButtons.Length; index++)
@@ -303,6 +379,8 @@ namespace CalculatorFrontEnd
                 _calculatorButtons[index].Click += new EventHandler(ClickButtonHandler);
                 this._buttonsTableLayout.Controls.Add(_calculatorButtons[index], _calculatorButtons[index].Column, _calculatorButtons[index].Row);
             }
+            this.ActiveControl = this._calculatorText;
+            this._calculatorText.SelectionStart = _calculatorText.Text.Length;
         }
     }
 }
